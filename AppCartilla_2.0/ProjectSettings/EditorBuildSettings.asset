@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/SamplesResources/Scenes/0-Main.unity
     guid: a09cb257d566c489595b16ab37547666
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Modelos3DRA.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: c2f5de5bb75653d4da5538e0d611f512
   m_configObjects: {}
