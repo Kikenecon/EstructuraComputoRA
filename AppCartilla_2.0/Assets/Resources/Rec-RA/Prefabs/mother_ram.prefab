@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3610513615477255635}
   - component: {fileID: 7395150087328867776}
+  - component: {fileID: 6742825236429960133}
   m_Layer: 0
   m_Name: mother_ram
   m_TagString: item
@@ -54,6 +55,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.16157055, y: 0.4239672, z: 1.2573651}
   m_Center: {x: 0.012411475, y: 0.14763544, z: -0.011698544}
+--- !u!114 &6742825236429960133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8908215778038099729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 934514f4616a1a247b474dc520f0526f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6462790392742413620
 PrefabInstance:
   m_ObjectHideFlags: 0

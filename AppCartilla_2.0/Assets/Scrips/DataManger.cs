@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UIElements;
 
 public class DataManger : MonoBehaviour
 {
@@ -16,9 +17,14 @@ public class DataManger : MonoBehaviour
         GameManager.instance.OnItemsMenu += CreateButtons;
     }
 
+
+
+
+
     private void CreateButtons()
     {
-        foreach(var item in Items) {
+        foreach (var item in Items)
+        {
             {
                 ItembuttonManager itemButton;
                 itemButton = Instantiate(itemButtonManager, buttonContainer.transform);
@@ -27,7 +33,7 @@ public class DataManger : MonoBehaviour
                 itemButton.Item3DModel = item.Item3DModel;
                 itemButton.name = item.ItemName;
             }
-            
+
             GameManager.instance.OnItemsMenu -= CreateButtons;
         }
     }

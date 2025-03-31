@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5497160871922742068}
   - component: {fileID: 3185397890710309709}
+  - component: {fileID: -272976793932290381}
   m_Layer: 0
   m_Name: mother_gpu
   m_TagString: item
@@ -54,6 +55,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0327541, y: 0.5348916, z: 0.4628326}
   m_Center: {x: -0.003275454, y: 0.25875747, z: 0.0065508634}
+--- !u!114 &-272976793932290381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747780670368811363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 934514f4616a1a247b474dc520f0526f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2748056146695079105
 PrefabInstance:
   m_ObjectHideFlags: 0

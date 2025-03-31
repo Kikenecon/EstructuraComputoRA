@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5613656209090876410}
   - component: {fileID: 4620273482221358741}
+  - component: {fileID: 1958222836107786429}
   m_Layer: 0
   m_Name: mother_mouse
   m_TagString: item
@@ -54,6 +55,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8059272, y: 0.30362138, z: 0.5091102}
   m_Center: {x: 0.039956123, y: 0.11986844, z: 0.1027444}
+--- !u!114 &1958222836107786429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2697935815203434920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 934514f4616a1a247b474dc520f0526f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7919726149492188089
 PrefabInstance:
   m_ObjectHideFlags: 0

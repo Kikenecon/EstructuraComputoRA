@@ -12,18 +12,21 @@ public class ARInterantionManager : MonoBehaviour
     private GameObject itemSelected;
     private bool isOverUI;
     private bool isOver3DModel;
-    private Vector2 initialTouchPos;
+    //private Vector2 initialTouchPos;
     private Vector2 initialTouchPOS;
 
-    [SerializeField] private float speedMovement = 4.0f;
-    [SerializeField] private float speddRotation = 5.0f;
-    [SerializeField] private float scaleFactor = 0.1f;
+    [SerializeField] private float speedMovement = 14.0f;
+    [SerializeField] private float speddRotation = 7.0f;
+    [SerializeField] private float scaleFactor = 1.0f;
 
     private float screenFactor = 0.0001f;
     private float touchDis;
     private Vector2 touchPositionDiff;
     private float rotationTolerance = 1.5f;
     private float scaleTolerance = 20f;
+
+  
+   
 
     public GameObject Item3DModel
     {
@@ -57,6 +60,30 @@ public class ARInterantionManager : MonoBehaviour
         Destroy(item3DModel);
         aRPointer.SetActive(false);
         GameManager.instance.MainMenu();
+    }
+
+    public void DuplicateItem()
+    {
+        if (item3DModel != null)
+        {
+            // Obtener el componente IPrototype del modelo 3D
+            IPrototype prototype = item3DModel.GetComponent<IPrototype>();
+            if (prototype != null)
+            {
+                // Clonar el modelo usando el patrón Prototype
+                GameObject clonedItem = prototype.Clone();
+
+                //// Desactivar el seguimiento de la cámara para la copia
+                //clonedItem.transform.parent = null;
+
+                // Cambiar el tag para diferenciar la copia y evitar que sea interactuable
+                clonedItem.tag = "ClonedItem";
+            }
+            else
+            {
+                Debug.LogWarning("El modelo 3D no tiene el componente IPrototype. Asegúrate de adjuntar Item3DModelPrototype al modelo.");
+            }
+        }
     }
 
     void Update()
