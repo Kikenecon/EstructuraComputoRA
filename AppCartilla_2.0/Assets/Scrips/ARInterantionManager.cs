@@ -16,8 +16,8 @@ public class ARInterantionManager : MonoBehaviour
     private Vector2 initialTouchPOS;
 
     [SerializeField] private float speedMovement = 14.0f;
-    [SerializeField] private float speddRotation = 7.0f;
-    [SerializeField] private float scaleFactor = 1.0f;
+    [SerializeField] private float speddRotation = 15.0f;
+    [SerializeField] private float scaleFactor = 6.0f;
 
     private float screenFactor = 0.0001f;
     private float touchDis;
@@ -73,11 +73,9 @@ public class ARInterantionManager : MonoBehaviour
                 // Clonar el modelo usando el patrón Prototype
                 GameObject clonedItem = prototype.Clone();
 
-                //// Desactivar el seguimiento de la cámara para la copia
-                //clonedItem.transform.parent = null;
+              
 
-                // Cambiar el tag para diferenciar la copia y evitar que sea interactuable
-                clonedItem.tag = "ClonedItem";
+            
             }
             else
             {

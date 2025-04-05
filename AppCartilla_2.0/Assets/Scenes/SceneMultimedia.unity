@@ -2137,7 +2137,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 61673892, y: 1982751.6}
+  m_AnchoredPosition: {x: 67525576, y: 2168125}
   m_SizeDelta: {x: 0, y: 440}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1359703686
@@ -2448,7 +2448,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1875648791}
+      - m_Target: {fileID: 1875648792}
         m_TargetAssemblyTypeName: ShareScreenShot, Assembly-CSharp
         m_MethodName: TakeScreenShot
         m_Mode: 1
@@ -2552,6 +2552,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1875648789}
   - component: {fileID: 1875648791}
+  - component: {fileID: 1875648792}
   m_Layer: 0
   m_Name: ARInteractionManager
   m_TagString: Untagged
@@ -2591,6 +2592,19 @@ MonoBehaviour:
   speedMovement: 14
   speddRotation: 5
   scaleFactor: 1
+--- !u!114 &1875648792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875648788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ead170ee48041419a3930cc3de6863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuCanvas: {fileID: 182860478}
 --- !u!1 &2019519681
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5613656209090876410}
   - component: {fileID: 4620273482221358741}
-  - component: {fileID: 1958222836107786429}
+  - component: {fileID: -5056740932670665348}
   m_Layer: 0
   m_Name: mother_mouse
   m_TagString: item
@@ -55,7 +55,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.1729336, y: 0.3894686, z: 0.7205363}
   m_Center: {x: -0.060132384, y: 0.18326613, z: 0.022876948}
---- !u!114 &1958222836107786429
+--- !u!114 &-5056740932670665348
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

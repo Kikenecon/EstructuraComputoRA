@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class Item3DModelPrototype : MonoBehaviour, IPrototype
+public class ConcretItem3DModelPrototype : MonoBehaviour, IPrototype
 {
-    public GameObject Clone()
+    public virtual GameObject Clone()
     {
         // Clonar el GameObject en la misma posición y rotación
         GameObject clone = Instantiate(gameObject, transform.position, transform.rotation);
@@ -14,7 +14,7 @@ public class Item3DModelPrototype : MonoBehaviour, IPrototype
         clone.transform.parent = null;
 
         // Ajustar la escala local del clon para que su escala global coincida con la del original
-        // Dado que el clon ya no tiene padre, su localScale será igual a su lossyScale
+       
         clone.transform.localScale = originalGlobalScale;
 
         Debug.Log($"Escala original (lossyScale): {transform.lossyScale}, Escala del clon (localScale): {clone.transform.localScale}");
@@ -24,17 +24,3 @@ public class Item3DModelPrototype : MonoBehaviour, IPrototype
     }
 }
 
-
-
-//using UnityEngine;
-
-//public class Item3DModelPrototype : MonoBehaviour, IPrototype
-//{
-//    public GameObject Clone()
-//    {
-//        // Usamos Instantiate para clonar el GameObject
-//        GameObject clone = Instantiate(gameObject, transform.position, transform.rotation);
-//        clone.transform.localScale = transform.localScale;
-//        return clone;
-//    }
-//}
