@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9217762780890017729}
   - component: {fileID: 4438952007495953450}
+  - component: {fileID: -8420388855371775308}
   m_Layer: 0
   m_Name: mother_disipador
   m_TagString: item
@@ -54,6 +55,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.54505944, y: 0.5880435, z: 0.45907053}
   m_Center: {x: -0.03628117, y: 0.30642167, z: 0.0076144785}
+--- !u!114 &-8420388855371775308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7886290005018172137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc494d174fa1bc544b1b721093e766c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 30
 --- !u!1001 &4740826299914659682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70,17 +84,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ccd58a498afa66e4aaeca91afd0d1eba,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ccd58a498afa66e4aaeca91afd0d1eba,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ccd58a498afa66e4aaeca91afd0d1eba,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ccd58a498afa66e4aaeca91afd0d1eba,
         type: 3}

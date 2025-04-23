@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4205518288724065544}
   - component: {fileID: 3624520147487500190}
+  - component: {fileID: 4376873252287117342}
   m_Layer: 0
   m_Name: mother_teclado
   m_TagString: item
@@ -54,6 +55,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8182665, y: 0.724844, z: 0.44798437}
   m_Center: {x: -0.02544266, y: 0.40694112, z: -0.043502524}
+--- !u!114 &4376873252287117342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579637456279079454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 934514f4616a1a247b474dc520f0526f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7276359483532964869
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70,17 +83,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 23b96ba6165a591439ce3e82726f95ab,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23b96ba6165a591439ce3e82726f95ab,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23b96ba6165a591439ce3e82726f95ab,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 23b96ba6165a591439ce3e82726f95ab,
         type: 3}

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4203280701956058591}
   - component: {fileID: 1867809906301203977}
+  - component: {fileID: -2789492144585742050}
   m_Layer: 0
   m_Name: mother_portatil
   m_TagString: item
@@ -54,6 +55,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.7032167, z: 1.1753721}
   m_Center: {x: 0, y: 0.2967834, z: 0.000000029802322}
+--- !u!114 &-2789492144585742050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208232807652264869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 934514f4616a1a247b474dc520f0526f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &131490157275661209
 PrefabInstance:
   m_ObjectHideFlags: 0

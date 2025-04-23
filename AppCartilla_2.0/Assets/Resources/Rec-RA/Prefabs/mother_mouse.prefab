@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5613656209090876410}
   - component: {fileID: 4620273482221358741}
+  - component: {fileID: -5056740932670665348}
   m_Layer: 0
   m_Name: mother_mouse
   m_TagString: item
@@ -52,8 +53,20 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8059272, y: 0.30362138, z: 0.5091102}
-  m_Center: {x: 0.039956123, y: 0.11986844, z: 0.1027444}
+  m_Size: {x: 1.1729336, y: 0.3894686, z: 0.7205363}
+  m_Center: {x: -0.060132384, y: 0.18326613, z: 0.022876948}
+--- !u!114 &-5056740932670665348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2697935815203434920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 934514f4616a1a247b474dc520f0526f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7919726149492188089
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70,17 +83,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8c9a374c335594241aad008c31859261,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8c9a374c335594241aad008c31859261,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8c9a374c335594241aad008c31859261,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8c9a374c335594241aad008c31859261,
         type: 3}
