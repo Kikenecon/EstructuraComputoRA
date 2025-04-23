@@ -73,13 +73,12 @@ public class ARInterantionManager : MonoBehaviour
                 // Clonar el modelo usando el patrón Prototype
                 GameObject clonedItem = prototype.Clone();
 
-              
-
+             
             
             }
             else
             {
-                Debug.LogWarning("El modelo 3D no tiene el componente IPrototype. Asegúrate de adjuntar Item3DModelPrototype al modelo.");
+                Debug.LogWarning("El modelo 3D no tiene el componente IPrototype.");
             }
         }
     }
