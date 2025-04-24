@@ -14,9 +14,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Menu.unity
     guid: c2f5de5bb75653d4da5538e0d611f512
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SceneMultimedia.unity
     guid: 4bf42c98c3c426c4292ca57b3f383fc2
+  - enabled: 1
+    path: Assets/Scenes/Escena_Ensamblaje/Level1Scene.unity
+    guid: 19a733e3455e42f4d9ac436d48026b3e
+  - enabled: 1
+    path: Assets/Scenes/Escena_Ensamblaje/Level2Scene.unity
+    guid: cde825a458db71d458f1a3140e62a5ac
+  - enabled: 1
+    path: Assets/Scenes/Escena_Ensamblaje/Level3Scene.unity
+    guid: 7d8ca11fce9cc5d4ebdb296220bfc623
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: a7401f1461674cf45b70aae8065f55c8,
       type: 2}
