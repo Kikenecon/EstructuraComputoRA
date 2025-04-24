@@ -4,11 +4,12 @@ using UnityEngine.UI;
 
 public class PartDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    private Vector2 originalPosition; // Posición original de la parte
-    private Transform originalParent; // Padre original (el inventario)
-    private CanvasGroup canvasGroup; // Para controlar la opacidad mientras se arrastra
-    private RectTransform rectTransform; // Para mover la parte
-    private string partType; // Tipo de parte (Motherboard, CPU, RAM)
+    private Vector2 originalPosition;
+    private Transform originalParent;
+    private CanvasGroup canvasGroup;
+    private RectTransform rectTransform;
+    private string partType;
+    private bool hasBeenPlaced = false;
 
     private void Awake()
     {
@@ -18,28 +19,20 @@ public class PartDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
-        // Obtener el tipo de parte del nombre del objeto (por ejemplo, "Part_Motherboard" -> "Motherboard")
         partType = gameObject.name.Replace("Part_", "");
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // Guardar la posición y el padre original
         originalPosition = rectTransform.anchoredPosition;
         originalParent = transform.parent;
-
-        // Reducir la opacidad mientras se arrastra
         canvasGroup.alpha = 0.6f;
-        // Desactivar el bloqueo de raycast para que los slots puedan detectar el soltado
         canvasGroup.blocksRaycasts = false;
-
-        // Mover la parte al Canvas para que esté por encima de otros elementos
         transform.SetParent(transform.root);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        // Mover la parte siguiendo el cursor (convertir la posición del cursor a coordenadas del Canvas)
         Vector2 localPointerPosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             rectTransform.parent as RectTransform,
@@ -52,32 +45,41 @@ public class PartDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Restaurar la opacidad
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
 
-        // Verificar si la parte se soltó en un slot
         GameObject slot = FindSlotUnderneath();
-        if (slot != null && IsCorrectSlot(slot))
+        if (slot != null && IsCorrectSlot(slot) && !hasBeenPlaced)
         {
-            // Colocar la parte en el slot
-            rectTransform.anchoredPosition = (slot.GetComponent<RectTransform>()).anchoredPosition;
-            transform.SetParent(slot.transform.parent); // Mover al Canvas (o al padre del slot)
-
-            // Retroalimentación visual: cambiar el color del slot temporalmente
-            StartCoroutine(FlashSlot(slot.GetComponent<Image>()));
+            // Validar el orden de ensamblaje con el AssemblyGameManager
+            bool canPlacePart = AssemblyGame.AssemblyGameManager.getInstance().TryAddPart(partType);
+            if (canPlacePart)
+            {
+                // Colocar la parte en el slot
+                RectTransform slotRectTransform = slot.GetComponent<RectTransform>();
+                transform.SetParent(slot.transform);
+                rectTransform.position = slotRectTransform.position;
+                hasBeenPlaced = true;
+                StartCoroutine(FlashSlot(slot.GetComponent<Image>()));
+            }
+            else
+            {
+                // Devolver la parte al inventario si el orden no es correcto
+                transform.SetParent(originalParent);
+                rectTransform.anchoredPosition = originalPosition;
+                hasBeenPlaced = false;
+            }
         }
         else
         {
-            // Si no se soltó en el slot correcto, devolver la parte al inventario
             transform.SetParent(originalParent);
             rectTransform.anchoredPosition = originalPosition;
+            hasBeenPlaced = false;
         }
     }
 
     private GameObject FindSlotUnderneath()
     {
-        // Encontrar el slot debajo de la parte usando raycast
         PointerEventData eventData = new PointerEventData(EventSystem.current)
         {
             position = Input.mousePosition
@@ -97,14 +99,12 @@ public class PartDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private bool IsCorrectSlot(GameObject slot)
     {
-        // Verificar si el slot corresponde al tipo de parte (por ejemplo, "Slot_Motherboard" para "Motherboard")
         string slotType = slot.name.Replace("Slot_", "");
         return slotType == partType;
     }
 
     private System.Collections.IEnumerator FlashSlot(Image slotImage)
     {
-        // Cambiar el color del slot a verde temporalmente
         Color originalColor = slotImage.color;
         slotImage.color = Color.green;
         yield return new WaitForSeconds(0.5f);
