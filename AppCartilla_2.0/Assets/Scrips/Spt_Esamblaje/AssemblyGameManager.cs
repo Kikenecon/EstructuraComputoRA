@@ -10,11 +10,11 @@ namespace AssemblyGame
         private static AssemblyGameManager instance = null;
 
         private int score = 0;
-        private float timeRemaining = 60f;
+        private float timeRemaining = 60f; // Comienza con 60 segundos en el Nivel 1
         private int currentLevel = 1;
         private bool isLevelComplete = false;
+        private bool isGameOver = false; // Nueva variable para manejar el estado de Game Over
 
-        private float[] timePerLevel = { 60f, 50f, 40f };
         private int[] pointsPerPartPerLevel = { 10, 15, 20 };
         private string[][] assemblyOrderPerLevel =
         {
@@ -25,6 +25,7 @@ namespace AssemblyGame
 
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private TextMeshProUGUI timerText;
+        [SerializeField] private TextMeshProUGUI gameOverText; // Nuevo campo para el texto de Game Over
         [SerializeField] private GameObject[] slots;
         [SerializeField] private GameObject[] availableParts;
 
@@ -68,21 +69,25 @@ namespace AssemblyGame
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             UpdateReferences();
-            ConfigureLevel(currentLevel); // Llamar ConfigureLevel después de actualizar referencias
+            ConfigureLevel(currentLevel);
             UpdateScoreUI();
             UpdateTimerUI();
         }
 
         private void Update()
         {
-            if (isLevelComplete || timeRemaining <= 0) return;
+            if (isLevelComplete || isGameOver || timeRemaining <= 0) return;
+
             timeRemaining -= Time.deltaTime;
             UpdateTimerUI();
+
             if (timeRemaining <= 0)
             {
+                isGameOver = true;
                 Debug.Log("¡Tiempo agotado! Fin del juego.");
-                ResetLevel();
+                ShowGameOver();
             }
+
             CheckLevelCompletion();
         }
 
@@ -115,6 +120,10 @@ namespace AssemblyGame
             {
                 isLevelComplete = true;
                 Debug.Log($"¡Nivel {currentLevel} completado! La computadora ha sido ensamblada correctamente.");
+
+                // Sumar 10 segundos al pasar de nivel
+                timeRemaining += 10f;
+
                 if (currentLevel < assemblyOrderPerLevel.Length)
                 {
                     currentLevel++;
@@ -128,10 +137,22 @@ namespace AssemblyGame
             }
         }
 
+        private void ShowGameOver()
+        {
+            if (gameOverText != null)
+            {
+                gameOverText.gameObject.SetActive(true);
+            }
+
+            // Reiniciar el juego desde el Nivel 1 después de un pequeño retraso
+            Invoke(nameof(ResetGame), 3f); // Esperar 3 segundos antes de reiniciar
+        }
+
         private void UpdateReferences()
         {
             scoreText = GameObject.Find("ScoreText")?.GetComponent<TextMeshProUGUI>();
             timerText = GameObject.Find("TimerText")?.GetComponent<TextMeshProUGUI>();
+            gameOverText = GameObject.Find("GameOverText")?.GetComponent<TextMeshProUGUI>(); // Buscar el texto de Game Over
 
             slots = new GameObject[]
             {
@@ -144,9 +165,13 @@ namespace AssemblyGame
 
             availableParts = GameObject.FindGameObjectsWithTag("AssemblyPart");
 
-            if (scoreText == null || timerText == null)
+            if (scoreText == null || timerText == null || gameOverText == null)
             {
-                Debug.LogWarning("No se encontraron ScoreText o TimerText en la escena. Asegúrate de que existan y estén nombrados correctamente.");
+                Debug.LogWarning("No se encontraron ScoreText, TimerText o GameOverText en la escena. Asegúrate de que existan y estén nombrados correctamente.");
+            }
+            else
+            {
+                gameOverText.gameObject.SetActive(false); // Asegurarse de que el texto de Game Over esté desactivado al cargar la escena
             }
         }
 
@@ -176,8 +201,8 @@ namespace AssemblyGame
 
         private void ConfigureLevel(int level)
         {
-            isLevelComplete = false; // Asegurarse de que isLevelComplete se reinicie
-            timeRemaining = timePerLevel[level - 1];
+            isLevelComplete = false;
+            isGameOver = false; // Reiniciar el estado de Game Over
             director.Reset();
             builder.SetAssemblyOrder(assemblyOrderPerLevel[level - 1]);
             partsFactory = level switch
@@ -224,15 +249,12 @@ namespace AssemblyGame
             return isValid;
         }
 
-        private void ResetLevel()
-        {
-            SceneManager.LoadScene($"Level{currentLevel}Scene");
-        }
-
         private void ResetGame()
         {
             score = 0;
             currentLevel = 1;
+            timeRemaining = 60f; // Reiniciar con 60 segundos
+            isGameOver = false;
             SceneManager.LoadScene("Level1Scene");
         }
     }
