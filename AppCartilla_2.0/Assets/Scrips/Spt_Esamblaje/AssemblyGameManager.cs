@@ -10,10 +10,10 @@ namespace AssemblyGame
         private static AssemblyGameManager instance = null;
 
         private int score = 0;
-        private float timeRemaining = 60f; // Comienza con 60 segundos en el Nivel 1
+        private float timeRemaining = 60f;
         private int currentLevel = 1;
         private bool isLevelComplete = false;
-        private bool isGameOver = false; // Nueva variable para manejar el estado de Game Over
+        private bool isGameOver = false;
 
         private int[] pointsPerPartPerLevel = { 10, 15, 20 };
         private string[][] assemblyOrderPerLevel =
@@ -25,13 +25,19 @@ namespace AssemblyGame
 
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private TextMeshProUGUI timerText;
-        [SerializeField] private TextMeshProUGUI gameOverText; // Nuevo campo para el texto de Game Over
+        [SerializeField] private TextMeshProUGUI gameOverText;
         [SerializeField] private GameObject[] slots;
         [SerializeField] private GameObject[] availableParts;
+        [SerializeField] private GameObject faultPrefab;
+        [SerializeField] private Transform faultParent;
 
         private AssemblyDirector director;
         private ComputerConcreteBuilder builder;
         private IAssemblyPartsFactory partsFactory;
+
+        private float faultSpawnTimer = 0f;
+        private float faultSpawnInterval = 10f;
+        private FaultCreator[] faultCreators;
 
         private AssemblyGameManager() { }
 
@@ -59,6 +65,12 @@ namespace AssemblyGame
             builder = new ComputerConcreteBuilder();
             director = new AssemblyDirector(builder);
             SceneManager.sceneLoaded += OnSceneLoaded;
+
+            faultCreators = new FaultCreator[]
+            {
+                new PointsFaultCreator(),
+                new TimeFaultCreator()
+            };
         }
 
         private void OnDestroy()
@@ -89,6 +101,23 @@ namespace AssemblyGame
             }
 
             CheckLevelCompletion();
+            SpawnFaults();
+        }
+
+        private void SpawnFaults()
+        {
+            if (currentLevel < 2) return;
+
+            faultSpawnTimer += Time.deltaTime;
+            if (faultSpawnTimer >= faultSpawnInterval)
+            {
+                FaultCreator creator = faultCreators[Random.Range(0, faultCreators.Length)];
+                IFault fault = creator.CreateFault(faultPrefab);
+                faultParent = faultParent ?? GameObject.Find("Canvas").transform;
+                (fault as MonoBehaviour).transform.SetParent(faultParent, false);
+
+                faultSpawnTimer = 0f;
+            }
         }
 
         public bool TryAddPart(string partType)
@@ -113,6 +142,18 @@ namespace AssemblyGame
             UpdateScoreUI();
         }
 
+        public void DeductTime(float amount)
+        {
+            timeRemaining -= amount;
+            if (timeRemaining < 0) timeRemaining = 0;
+            UpdateTimerUI();
+        }
+
+        public GameObject[] GetSlots() // Nuevo método público
+        {
+            return slots;
+        }
+
         private void CheckLevelCompletion()
         {
             ComputerProduct product = director.GetResult();
@@ -121,7 +162,6 @@ namespace AssemblyGame
                 isLevelComplete = true;
                 Debug.Log($"¡Nivel {currentLevel} completado! La computadora ha sido ensamblada correctamente.");
 
-                // Sumar 10 segundos al pasar de nivel
                 timeRemaining += 10f;
 
                 if (currentLevel < assemblyOrderPerLevel.Length)
@@ -144,15 +184,15 @@ namespace AssemblyGame
                 gameOverText.gameObject.SetActive(true);
             }
 
-            // Reiniciar el juego desde el Nivel 1 después de un pequeño retraso
-            Invoke(nameof(ResetGame), 3f); // Esperar 3 segundos antes de reiniciar
+            Invoke(nameof(ResetGame), 3f);
         }
 
         private void UpdateReferences()
         {
             scoreText = GameObject.Find("ScoreText")?.GetComponent<TextMeshProUGUI>();
             timerText = GameObject.Find("TimerText")?.GetComponent<TextMeshProUGUI>();
-            gameOverText = GameObject.Find("GameOverText")?.GetComponent<TextMeshProUGUI>(); // Buscar el texto de Game Over
+            gameOverText = GameObject.Find("GameOverText")?.GetComponent<TextMeshProUGUI>();
+            faultParent = GameObject.Find("Canvas")?.transform;
 
             slots = new GameObject[]
             {
@@ -165,13 +205,13 @@ namespace AssemblyGame
 
             availableParts = GameObject.FindGameObjectsWithTag("AssemblyPart");
 
-            if (scoreText == null || timerText == null || gameOverText == null)
+            if (scoreText == null || timerText == null || gameOverText == null || faultParent == null)
             {
-                Debug.LogWarning("No se encontraron ScoreText, TimerText o GameOverText en la escena. Asegúrate de que existan y estén nombrados correctamente.");
+                Debug.LogWarning("No se encontraron ScoreText, TimerText, GameOverText o Canvas en la escena. Asegúrate de que existan y estén nombrados correctamente.");
             }
             else
             {
-                gameOverText.gameObject.SetActive(false); // Asegurarse de que el texto de Game Over esté desactivado al cargar la escena
+                gameOverText.gameObject.SetActive(false);
             }
         }
 
@@ -202,7 +242,8 @@ namespace AssemblyGame
         private void ConfigureLevel(int level)
         {
             isLevelComplete = false;
-            isGameOver = false; // Reiniciar el estado de Game Over
+            isGameOver = false;
+            faultSpawnTimer = 0f;
             director.Reset();
             builder.SetAssemblyOrder(assemblyOrderPerLevel[level - 1]);
             partsFactory = level switch
@@ -253,7 +294,7 @@ namespace AssemblyGame
         {
             score = 0;
             currentLevel = 1;
-            timeRemaining = 60f; // Reiniciar con 60 segundos
+            timeRemaining = 60f;
             isGameOver = false;
             SceneManager.LoadScene("Level1Scene");
         }

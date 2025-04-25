@@ -1341,7 +1341,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1080, y: 2340}
+  m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1804,6 +1804,9 @@ MonoBehaviour:
   - {fileID: 806788547}
   - {fileID: 1040627763}
   - {fileID: 1400969805}
+  faultPrefab: {fileID: 1076884309208283395, guid: 9842b31068ec8b445bb2b9655dada367,
+    type: 3}
+  faultParent: {fileID: 1533611261}
 --- !u!4 &2116422891
 Transform:
   m_ObjectHideFlags: 0
