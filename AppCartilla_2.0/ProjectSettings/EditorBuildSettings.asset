@@ -5,10 +5,31 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/SamplesResources/Scenes/0-Main.unity
     guid: a09cb257d566c489595b16ab37547666
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Modelos3DRA.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  m_configObjects: {}
+  - enabled: 0
+    path: Assets/Scenes/Menu.unity
+    guid: c2f5de5bb75653d4da5538e0d611f512
+  - enabled: 0
+    path: Assets/Scenes/SceneMultimedia.unity
+    guid: 4bf42c98c3c426c4292ca57b3f383fc2
+  - enabled: 1
+    path: Assets/Scenes/Escena_Ensamblaje/Level1Scene.unity
+    guid: 19a733e3455e42f4d9ac436d48026b3e
+  - enabled: 1
+    path: Assets/Scenes/Escena_Ensamblaje/Level2Scene.unity
+    guid: cde825a458db71d458f1a3140e62a5ac
+  - enabled: 1
+    path: Assets/Scenes/Escena_Ensamblaje/Level3Scene.unity
+    guid: 7d8ca11fce9cc5d4ebdb296220bfc623
+  m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: a7401f1461674cf45b70aae8065f55c8,
+      type: 2}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 4de1a68110142da4a872da46f4969291,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a8fd6392b1eb064488bda7b1344156a2,
+      type: 2}
