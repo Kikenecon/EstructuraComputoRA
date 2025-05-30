@@ -20,6 +20,7 @@ namespace AssemblyGame
         public void SetRequiredParts(string[] parts)
         {
             requiredParts = parts;
+            Debug.Log($"Partes requeridas establecidas: {string.Join(", ", requiredParts)}");
         }
 
         public void Reset()
@@ -43,7 +44,7 @@ namespace AssemblyGame
                     HasCPU = true;
                     break;
                 case "RAM":
-                case "RAM_Advanced": // Aceptar ambas como RAM válida
+                case "RAM_Advanced":
                     HasRAM = true;
                     break;
                 case "GraphicsCard":
@@ -53,7 +54,7 @@ namespace AssemblyGame
                     HasPowerSupply = true;
                     break;
             }
-            Debug.Log($"{partType} añadida a la computadora.");
+            Debug.Log($"{partType} añadida a la computadora. Estado: {GetPartsStatus()}");
         }
 
         public bool HasPart(string partType)
@@ -63,7 +64,7 @@ namespace AssemblyGame
                 "Cooler" => HasCooler,
                 "CPU" => HasCPU,
                 "RAM" => HasRAM,
-                "RAM_Advanced" => HasRAM, // Aceptar ambas como RAM
+                "RAM_Advanced" => HasRAM,
                 "GraphicsCard" => HasGraphicsCard,
                 "PowerSupply" => HasPowerSupply,
                 _ => false
@@ -72,14 +73,27 @@ namespace AssemblyGame
 
         public bool IsFullyAssembled()
         {
+            if (requiredParts == null || requiredParts.Length == 0)
+            {
+                Debug.LogWarning("No se han establecido partes requeridas.");
+                return false;
+            }
+
             foreach (var part in requiredParts)
             {
                 if (!HasPart(part))
                 {
+                    Debug.Log($"Falta la parte {part}. Estado actual: {GetPartsStatus()}");
                     return false;
                 }
             }
+            Debug.Log("Computadora completamente ensamblada.");
             return true;
+        }
+
+        public string GetPartsStatus()
+        {
+            return $"Cooler: {HasCooler}, CPU: {HasCPU}, RAM: {HasRAM}, GraphicsCard: {HasGraphicsCard}, PowerSupply: {HasPowerSupply}, Required: {string.Join(", ", requiredParts ?? new string[] { })}";
         }
     }
 }

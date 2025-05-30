@@ -7,21 +7,14 @@ namespace AssemblyGame
 {
     public class AssemblyGameManager : MonoBehaviour
     {
-        // Singleton: Variable estática privada que almacena la única instancia de AssemblyGameManager.
-        // Garantiza que solo haya un administrador del juego en todo momento.
         private static AssemblyGameManager instance = null;
 
-        // Variables de estado del juego
-        private int score = 0; // Almacena el puntaje del jugador.
-        private float timeRemaining = 60f; // Tiempo restante en segundos para completar el nivel.
-        private int currentLevel = 1; // Nivel actual del juego.
-        private bool isLevelComplete = false; // Indica si el nivel actual está completado.
-        private bool isGameOver = false; // Indica si el juego ha terminado.
+        private int score = 0;
+        private float timeRemaining = 5f;
+        private int currentLevel = 1;
+        private bool isLevelComplete = false;
 
-        // Configuración de niveles
-     
         private int[] pointsPerPartPerLevel = { 10, 15, 20 };
-        // Orden de ensamblaje de las partes para cada nivel.
         private string[][] assemblyOrderPerLevel =
         {
             new string[] { "Cooler", "CPU", "RAM" },
@@ -29,160 +22,163 @@ namespace AssemblyGame
             new string[] { "Cooler", "GraphicsCard", "CPU", "RAM", "PowerSupply" }
         };
 
-       
-        [SerializeField] private TextMeshProUGUI scoreText; 
-        [SerializeField] private TextMeshProUGUI timerText; 
-        [SerializeField] private TextMeshProUGUI gameOverText; 
-        [SerializeField] private GameObject[] slots; 
-        [SerializeField] private GameObject[] availableParts; 
-        [SerializeField] private GameObject faultPrefab; 
-        [SerializeField] private Transform faultParent; 
+        [SerializeField] private TextMeshProUGUI scoreText;
+        [SerializeField] private TextMeshProUGUI timerText;
+        [SerializeField] private GameObject[] slots;
+        [SerializeField] private GameObject[] availableParts;
+        [SerializeField] private GameObject faultPrefab;
+        [SerializeField] private Transform faultParent;
 
-        // Builder
-        private AssemblyDirector director; // Director del patrón Builder, 
-        private ComputerConcreteBuilder builder; // Builder concreto para construir la computadora.
-        private IAssemblyPartsFactory partsFactory; // Fábrica abstracta para determinar qué partes están disponibles por nivel.
+        private AssemblyDirector director;
+        private ComputerConcreteBuilder builder;
+        private IAssemblyPartsFactory partsFactory;
 
-        // Gestión de fallos (usando Factory Method)
-        private float faultSpawnTimer = 0f; // Temporizador para controlar la generación de fallos.
-        private float faultSpawnInterval = 10f; // Intervalo de tiempo  entre la generación de fallos.
-        private FaultCreator[] faultCreators; // Arreglo de creadores de fallos (PointsFaultCreator, TimeFaultCreator).
+        private FaultCreator[] faultCreators;
 
-        // Constructor privado (parte del patrón Singleton).
-        // Evita que se creen instancias de AssemblyGameManager desde fuera de la clase.
+        private IGameState currentState;
+
         private AssemblyGameManager() { }
 
-        // Método estático público para acceder a la única instancia (patrón Singleton).
-        // asegura que persista entre escenas.
         public static AssemblyGameManager getInstance()
         {
             if (instance == null)
             {
-                GameObject gameManagerObject = new GameObject("AssemblyGameManager");
-                instance = gameManagerObject.AddComponent<AssemblyGameManager>();
-                DontDestroyOnLoad(gameManagerObject); // Persiste el objeto entre escenas.
+                instance = FindObjectOfType<AssemblyGameManager>();
+                if (instance == null)
+                {
+                    Debug.LogError("AssemblyGameManager no está instanciado. Asegúrate de tener un GameObject con este script en la escena inicial (Level1Scene).");
+                }
             }
             return instance;
         }
 
-        
-        // Implementa la lógica del Singleton 
         private void Awake()
         {
-            // Singleton: Verifica si ya existe una instancia.
-            // Si existe otra, destruye este objeto para garantizar una sola instancia.
             if (instance != null && instance != this)
             {
+                Debug.Log($"Destruyendo instancia duplicada de AssemblyGameManager en GameObject: {gameObject.name}");
                 Destroy(gameObject);
                 return;
             }
-            instance = this;
-            DontDestroyOnLoad(gameObject); 
 
-            // Inicializa el Builder y el Director para el ensamblaje de la computadora.
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            if (FindObjectOfType<UIManagerState>() == null)
+            {
+                GameObject uiManagerObject = new GameObject("UIManager");
+                uiManagerObject.AddComponent<UIManagerState>();
+                DontDestroyOnLoad(uiManagerObject);
+                Debug.Log("UIManagerState creado dinámicamente.");
+            }
+
+            if (faultPrefab == null)
+            {
+                Debug.LogWarning("FaultPrefab no está asignado en AssemblyGameManager al iniciar. Asegúrate de asignarlo en el Inspector en Level1Scene.");
+            }
+
             builder = new ComputerConcreteBuilder();
             director = new AssemblyDirector(builder);
-
-            // Suscribe el método OnSceneLoaded al evento de carga de escenas.
             SceneManager.sceneLoaded += OnSceneLoaded;
 
-            // Inicializa los creadores de fallos (Factory Method).
             faultCreators = new FaultCreator[]
             {
                 new PointsFaultCreator(),
                 new TimeFaultCreator()
             };
+
+            ConfigureLevel(currentLevel);
+            currentState = new PlayingState();
+            currentState.OnEnter(this);
         }
 
-        // Método se ejecuta al destruir el objeto.
-        
         private void OnDestroy()
         {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
+            if (instance == this)
+            {
+                SceneManager.sceneLoaded -= OnSceneLoaded;
+                instance = null;
+            }
         }
 
-        // Método que se ejecuta cada vez que se carga una nueva escena.
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            UpdateReferences(); // Actualiza las referencias a los objetos de la escena.
-            ConfigureLevel(currentLevel); // Configura el nivel actual.
-            UpdateScoreUI(); // Actualiza el texto del puntaje en la UI.
-            UpdateTimerUI(); // Actualiza el texto del temporizador en la UI.
+            UpdateReferences();
+            ConfigureLevel(currentLevel);
+            SetState(new PlayingState());
+            Time.timeScale = 1f;
         }
 
-        
-        // Gestiona la lógica principal del juego: temporizador, finalización de nivel y generación de fallos.
         private void Update()
         {
-            // Si el nivel está completado, el juego ha terminado o se acabó el tiempo, no hace nada.
-            if (isLevelComplete || isGameOver || timeRemaining <= 0) return;
-
-            // Reduce el tiempo restante y actualiza la UI.
-            timeRemaining -= Time.deltaTime;
+            currentState.Update(this);
+            currentState.HandleInput(this);
             UpdateTimerUI();
-
-            // Si se acaba el tiempo, termina el juego.
-            if (timeRemaining <= 0)
-            {
-                isGameOver = true;
-                Debug.Log("¡Tiempo agotado! Fin del juego.");
-                ShowGameOver();
-            }
-
-            // Verifica si el nivel está completado.
-            CheckLevelCompletion();
-            // Genera fallos (si corresponde).
-            SpawnFaults();
+            UpdateScoreUI();
+            CheckTimeOut();
         }
 
-        
-        // Usa el patrón Factory Method para crear los fallos.
-        private void SpawnFaults()
+        public void SetState(IGameState newState)
         {
-            if (currentLevel < 2) return; // Los fallos solo aparecen a partir del Nivel 2.
+            currentState.OnExit(this);
+            currentState = newState;
+            currentState.OnEnter(this);
+        }
 
-            faultSpawnTimer += Time.deltaTime;
-            if (faultSpawnTimer >= faultSpawnInterval)
+        public IGameState GetCurrentState()
+        {
+            return currentState;
+        }
+
+        public void SpawnFault()
+        {
+            if (faultPrefab == null)
             {
-                // Selecciona un creador aleatorio y crea un fallo.
-                FaultCreator creator = faultCreators[Random.Range(0, faultCreators.Length)];
-                IFault fault = creator.CreateFault(faultPrefab);
-                faultParent = faultParent ?? GameObject.Find("Canvas").transform;
-                (fault as MonoBehaviour).transform.SetParent(faultParent, false);
+                Debug.LogWarning("FaultPrefab no está asignado en AssemblyGameManager. No se puede generar un fault.");
+                return;
+            }
 
-                faultSpawnTimer = 0f; // Reinicia el temporizador.
+            FaultCreator creator = faultCreators[Random.Range(0, faultCreators.Length)];
+            IFault fault = creator.CreateFault(faultPrefab);
+            faultParent = faultParent ?? GameObject.Find("Canvas").transform;
+            if (faultParent != null)
+            {
+                (fault as MonoBehaviour).transform.SetParent(faultParent, false);
+            }
+            else
+            {
+                Debug.LogWarning("No se encontró el Canvas para asignar como padre del fault.");
             }
         }
 
-        
-        // Usa el patrón Builder para gestionar el ensamblaje.
         public bool TryAddPart(string partType)
         {
-            // Verifica si la parte es válida para el nivel actual (usando Abstract Factory).
             if (!IsPartValidForLevel(partType))
             {
                 Debug.Log($"Error: {partType} no es una parte válida para este nivel.");
                 return false;
             }
 
-            // Intenta añadir la parte usando el Director.
             bool success = director.TryAddPart(partType);
             if (success)
             {
-                // Si se añadió correctamente, suma puntos según el nivel.
                 AddScore(pointsPerPartPerLevel[currentLevel - 1]);
+                Debug.Log($"Parte {partType} añadida correctamente. Verificando completitud del nivel...");
+                CheckLevelCompletion();
+                if (IsLevelComplete())
+                {
+                    SetState(new LevelCompletedState());
+                }
             }
             return success;
         }
 
-        // Añade o resta puntos al puntaje del jugador y actualiza la UI.
         public void AddScore(int points)
         {
             score += points;
             UpdateScoreUI();
         }
 
-        // Resta tiempo al temporizador (usado por TimeFault) y actualiza la UI.
         public void DeductTime(float amount)
         {
             timeRemaining -= amount;
@@ -190,56 +186,106 @@ namespace AssemblyGame
             UpdateTimerUI();
         }
 
-        // Devuelve el arreglo de slots (usado por los creadores de fallos).
+        public void AddTime(float amount)
+        {
+            timeRemaining += amount;
+            UpdateTimerUI();
+        }
+
+        public void SetTimeRemaining(float time)
+        {
+            timeRemaining = time;
+            UpdateTimerUI();
+        }
+
+        public void CheckLevelCompletion()
+        {
+            ComputerProduct product = director.GetResult();
+            bool isFullyAssembled = product.IsFullyAssembled();
+            Debug.Log($"¿Computadora ensamblada? {isFullyAssembled}. Estado: {product.GetPartsStatus()}");
+            if (isFullyAssembled)
+            {
+                isLevelComplete = true;
+                Debug.Log($"¡Nivel {currentLevel} completado! La computadora ha sido ensamblada correctamente.");
+                UIManagerState.Instance.ShowLevelComplete();
+                SetState(new LevelCompletedState());
+            }
+        }
+
+        public bool IsLevelComplete()
+        {
+            return isLevelComplete;
+        }
+
+        public void AdvanceToNextLevel()
+        {
+            if (currentLevel < assemblyOrderPerLevel.Length)
+            {
+                currentLevel++;
+                SetTimeRemaining(60f);
+                SceneManager.LoadScene($"Level{currentLevel}Scene");
+                SetState(new PlayingState());
+                Time.timeScale = 1f;
+            }
+            else
+            {
+                Debug.Log("¡Has completado todos los niveles! Puntaje final: " + score);
+                ResetGame();
+            }
+        }
+
+        public void CheckTimeOut()
+        {
+            if (timeRemaining <= 0 && !(currentState is GameOverState))
+            {
+                SetState(new GameOverState());
+                UIManagerState.Instance.ShowGameOver();
+            }
+        }
+
+        public float GetTimeRemaining()
+        {
+            return timeRemaining;
+        }
+
+        public int GetCurrentLevel()
+        {
+            return currentLevel;
+        }
+
         public GameObject[] GetSlots()
         {
             return slots;
         }
 
-        // Verifica si si la computadora está completamente ensamblada.
-        // Si se completa, avanza al siguiente nivel o termina el juego.
-        private void CheckLevelCompletion()
+        public void UpdateScoreUI()
         {
-            ComputerProduct product = director.GetResult();
-            if (product.IsFullyAssembled())
+            if (scoreText != null)
             {
-                isLevelComplete = true;
-                Debug.Log($"¡Nivel {currentLevel} completado! La computadora ha sido ensamblada correctamente.");
-
-                timeRemaining += 10f; // Añade tiempo extra al completar un nivel.
-
-                // Si hay más niveles, avanza al siguiente.
-                if (currentLevel < assemblyOrderPerLevel.Length)
-                {
-                    currentLevel++;
-                    SceneManager.LoadScene($"Level{currentLevel}Scene");
-                }
-                else
-                {
-                    // Si no hay más niveles, termina el juego.
-                    Debug.Log("¡Has completado todos los niveles! Puntaje final: " + score);
-                    ResetGame();
-                }
+                scoreText.text = "Puntaje: " + score.ToString();
+            }
+            else
+            {
+                Debug.LogWarning("ScoreText es null al intentar actualizar UI.");
             }
         }
 
-        // Muestra el texto de "Game Over" y reinicia el juego después de 3 segundos.
-        private void ShowGameOver()
+        public void UpdateTimerUI()
         {
-            if (gameOverText != null)
+            if (timerText != null)
             {
-                gameOverText.gameObject.SetActive(true);
+                timerText.text = Mathf.Ceil(timeRemaining).ToString();
             }
-
-            Invoke(nameof(ResetGame), 3f);
+            else
+            {
+                Debug.LogWarning("TimerText es null al intentar actualizar UI.");
+            }
         }
 
-        // Actualiza las referencias a los objetos de la escena (UI, slots, partes, etc.).
         private void UpdateReferences()
         {
             scoreText = GameObject.Find("ScoreText")?.GetComponent<TextMeshProUGUI>();
             timerText = GameObject.Find("TimerText")?.GetComponent<TextMeshProUGUI>();
-            gameOverText = GameObject.Find("GameOverText")?.GetComponent<TextMeshProUGUI>();
             faultParent = GameObject.Find("Canvas")?.transform;
 
             slots = new GameObject[]
@@ -253,51 +299,17 @@ namespace AssemblyGame
 
             availableParts = GameObject.FindGameObjectsWithTag("AssemblyPart");
 
-            if (scoreText == null || timerText == null || gameOverText == null || faultParent == null)
-            {
-                Debug.LogWarning("No se encontraron ScoreText, TimerText, GameOverText o Canvas en la escena. Asegúrate de que existan y estén nombrados correctamente.");
-            }
-            else
-            {
-                gameOverText.gameObject.SetActive(false);
-            }
+            if (scoreText == null) Debug.LogWarning("ScoreText no encontrado en la escena actual.");
+            if (timerText == null) Debug.LogWarning("TimerText no encontrado en la escena actual.");
+            if (faultParent == null) Debug.LogWarning("Canvas no encontrado en la escena actual.");
         }
 
-        // Actualiza el texto del puntaje en la UI.
-        private void UpdateScoreUI()
-        {
-            if (scoreText != null)
-            {
-                scoreText.text = "Puntaje: " + score.ToString();
-            }
-            else
-            {
-                Debug.LogWarning("ScoreText no está asignado. No se puede actualizar el puntaje en la UI.");
-            }
-        }
-
-        // Actualiza el texto del temporizador en la UI.
-        private void UpdateTimerUI()
-        {
-            if (timerText != null)
-            {
-                timerText.text = Mathf.Ceil(timeRemaining).ToString();
-            }
-            else
-            {
-                Debug.LogWarning("TimerText no está asignado. No se puede actualizar el temporizador en la UI.");
-            }
-        }
-
-        // Configura el nivel actual: reinicia estados, configura el orden de ensamblaje y las partes disponibles.
         private void ConfigureLevel(int level)
         {
             isLevelComplete = false;
-            isGameOver = false;
-            faultSpawnTimer = 0f;
+            builder.Reset();
             director.Reset();
             builder.SetAssemblyOrder(assemblyOrderPerLevel[level - 1]);
-            // Usa el patrón Abstract Factory para determinar las partes disponibles.
             partsFactory = level switch
             {
                 1 => new Level1PartsFactory(),
@@ -305,11 +317,11 @@ namespace AssemblyGame
                 3 => new Level3PartsFactory(),
                 _ => new Level1PartsFactory()
             };
+            SetTimeRemaining(60f);
             Debug.Log($"Iniciando nivel {level}. Orden de ensamblaje: {string.Join(" -> ", assemblyOrderPerLevel[level - 1])}");
             ValidatePartsForLevel();
         }
 
-        // Activa o desactiva las partes disponibles según el nivel (usando Abstract Factory).
         private void ValidatePartsForLevel()
         {
             if (availableParts == null) return;
@@ -321,14 +333,9 @@ namespace AssemblyGame
 
                 bool isValid = IsPartValidForLevel(assemblyPart.PartType);
                 part.SetActive(isValid);
-                if (!isValid)
-                {
-                    Debug.Log($"Parte {assemblyPart.PartType} desactivada porque no es válida para el nivel {currentLevel}.");
-                }
             }
         }
 
-        // Verifica si una parte es válida para el nivel actual (usando Abstract Factory).
         private bool IsPartValidForLevel(string partType)
         {
             bool isValid = partType switch
@@ -344,13 +351,11 @@ namespace AssemblyGame
             return isValid;
         }
 
-        // Reinicia el juego al estado inicial (puntaje, nivel, tiempo, etc.).
-        private void ResetGame()
+        public void ResetGame()
         {
             score = 0;
             currentLevel = 1;
             timeRemaining = 60f;
-            isGameOver = false;
             SceneManager.LoadScene("Level1Scene");
         }
     }
