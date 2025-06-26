@@ -10,6 +10,8 @@
 [Ll]ogs/
 /[Uu]ser[Ss]ettings/
 AppCartilla_2.0/UserSettings/
+AppCartilla_2.0/Packages/com.ptc.vuforia.engine-*.tgz
+
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
