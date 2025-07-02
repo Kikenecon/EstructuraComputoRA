@@ -1,7 +1,7 @@
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
-using System.Linq;
 
 namespace AssemblyGame
 {
@@ -10,20 +10,22 @@ namespace AssemblyGame
         private static AssemblyGameManager instance = null;
 
         private int score = 0;
-        private float timeRemaining = 5f;
+        private float timeRemaining = 60f;
         private int currentLevel = 1;
         private bool isLevelComplete = false;
+        private int currentPartIndex = 0; // Índice de la parte actual en el orden
 
         private int[] pointsPerPartPerLevel = { 10, 15, 20 };
         private string[][] assemblyOrderPerLevel =
         {
-            new string[] { "Cooler", "CPU", "RAM" },
-            new string[] { "Cooler", "CPU", "GraphicsCard", "RAM" },
-            new string[] { "Cooler", "GraphicsCard", "CPU", "RAM", "PowerSupply" }
+            new string[] { "Cooler", "CPU", "RAM" }, // Nivel 1: Orden original
+            new string[] { "CPU", "RAM", "GraphicsCard", "Cooler" }, // Nivel 2: Nuevo orden
+            new string[] { "RAM", "PowerSupply", "CPU", "GraphicsCard", "Cooler" } // Nivel 3: Nuevo orden
         };
 
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private TextMeshProUGUI timerText;
+        [SerializeField] private TextMeshProUGUI nextPartText; // Nuevo campo para el texto de la próxima parte
         [SerializeField] private GameObject[] slots;
         [SerializeField] private GameObject[] availableParts;
         [SerializeField] private GameObject faultPrefab;
@@ -60,7 +62,7 @@ namespace AssemblyGame
                 Destroy(gameObject);
                 return;
             }
-            
+
             instance = this;
             DontDestroyOnLoad(gameObject);
 
@@ -70,6 +72,13 @@ namespace AssemblyGame
                 uiManagerObject.AddComponent<UIManagerState>();
                 DontDestroyOnLoad(uiManagerObject);
                 Debug.Log("UIManagerState creado dinámicamente.");
+            }
+
+            if (FindObjectOfType<PartDescriptionManager>() == null)
+            {
+                GameObject descManagerObject = new GameObject("PartDescriptionManager");
+                descManagerObject.AddComponent<PartDescriptionManager>();
+                DontDestroyOnLoad(descManagerObject);
             }
 
             if (faultPrefab == null)
@@ -164,6 +173,11 @@ namespace AssemblyGame
             {
                 AddScore(pointsPerPartPerLevel[currentLevel - 1]);
                 Debug.Log($"Parte {partType} añadida correctamente. Verificando completitud del nivel...");
+                if (partType == GetNextPart())
+                {
+                    currentPartIndex++; // Avanza al siguiente índice si la parte es correcta
+                    UpdateNextPartText(); // Actualiza el texto del panel
+                }
                 CheckLevelCompletion();
                 if (IsLevelComplete())
                 {
@@ -222,6 +236,7 @@ namespace AssemblyGame
             if (currentLevel < assemblyOrderPerLevel.Length)
             {
                 currentLevel++;
+                currentPartIndex = 0; // Reinicia el índice al pasar de nivel
                 SetTimeRemaining(60f);
                 SceneManager.LoadScene($"Level{currentLevel}Scene");
                 SetState(new PlayingState());
@@ -282,10 +297,36 @@ namespace AssemblyGame
             }
         }
 
+        public void UpdateNextPartText()
+        {
+            if (nextPartText != null)
+            {
+                string nextPart = GetNextPart();
+                string description = nextPart != null
+                    ? PartDescriptionManager.Instance.GetDescription(currentLevel, nextPart)
+                    : "¡Ensamblaje completo!";
+                nextPartText.text = description;
+            }
+            else
+            {
+                Debug.LogWarning("nextPartText es null al intentar actualizar UI.");
+            }
+        }
+
+        private string GetNextPart()
+        {
+            if (currentPartIndex < assemblyOrderPerLevel[currentLevel - 1].Length)
+            {
+                return assemblyOrderPerLevel[currentLevel - 1][currentPartIndex];
+            }
+            return null; // Indica que no hay más partes
+        }
+
         private void UpdateReferences()
         {
             scoreText = GameObject.Find("ScoreText")?.GetComponent<TextMeshProUGUI>();
             timerText = GameObject.Find("TimerText")?.GetComponent<TextMeshProUGUI>();
+            nextPartText = GameObject.Find("NextPartText")?.GetComponent<TextMeshProUGUI>(); // Nuevo texto
             faultParent = GameObject.Find("Canvas")?.transform;
 
             slots = new GameObject[]
@@ -301,6 +342,7 @@ namespace AssemblyGame
 
             if (scoreText == null) Debug.LogWarning("ScoreText no encontrado en la escena actual.");
             if (timerText == null) Debug.LogWarning("TimerText no encontrado en la escena actual.");
+            if (nextPartText == null) Debug.LogWarning("NextPartText no encontrado en la escena actual.");
             if (faultParent == null) Debug.LogWarning("Canvas no encontrado en la escena actual.");
         }
 
@@ -317,7 +359,9 @@ namespace AssemblyGame
                 3 => new Level3PartsFactory(),
                 _ => new Level1PartsFactory()
             };
+            currentPartIndex = 0; // Reinicia el índice al configurar el nivel
             SetTimeRemaining(60f);
+            UpdateNextPartText(); // Inicializa el texto del panel
             Debug.Log($"Iniciando nivel {level}. Orden de ensamblaje: {string.Join(" -> ", assemblyOrderPerLevel[level - 1])}");
             ValidatePartsForLevel();
         }
@@ -355,6 +399,7 @@ namespace AssemblyGame
         {
             score = 0;
             currentLevel = 1;
+            currentPartIndex = 0; // Reinicia el índice
             timeRemaining = 60f;
             SceneManager.LoadScene("Level1Scene");
         }
