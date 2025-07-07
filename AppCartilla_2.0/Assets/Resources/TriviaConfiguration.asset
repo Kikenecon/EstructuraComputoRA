@@ -12,4 +12,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6f8a8d2baf91a4d9e3f29b012f1785, type: 3}
   m_Name: TriviaConfiguration
   m_EditorClassIdentifier: 
-  Categories: []
+  Categories:
+  - CategoryName: Hardware Interno
+    Questions:
+    - Question: "\xBFCu\xE1l es el componente que se encarga de interpretar datos
+        y enviar instrucciones a los programas?"
+      Answer1: Disco duro
+      Answer2: Memoria RAM
+      Answer3: Procesador
+      Answer4: Tarjeta de red
+      CorrectAnswerIndex: 3
+    - Question: "\xBFQu\xE9 componente transforma corriente alterna en continua dentro
+        del computador?"
+      Answer1: Disco duro
+      Answer2: Fuente de poder
+      Answer3: Placa base
+      Answer4: Ventilador
+      CorrectAnswerIndex: 2
+    - Question: "\xBFQu\xE9 componente es considerado el coraz\xF3n del sistema,
+        conectando todos los dem\xE1s?"
+      Answer1: Disco duro
+      Answer2: Tarjeta Grafica
+      Answer3: Tarjeta madre
+      Answer4: Fuente de poder
+      CorrectAnswerIndex: 0
+  - CategoryName: "Tarjeta Gr\xE1fica"
+    Questions:
+    - Question: "\xBFQu\xE9 unidad se encarga del procesamiento gr\xE1fico dentro
+        de una tarjeta de video?"
+      Answer1: RAMDAC
+      Answer2: GPU
+      Answer3: VRAM
+      Answer4: BIOS
+      CorrectAnswerIndex: 2
+    - Question: "\xBFQu\xE9 elemento convierte se\xF1ales digitales en anal\xF3gicas
+        en una tarjeta gr\xE1fica?"
+      Answer1: RAMDAC
+      Answer2: GPU
+      Answer3: Chipset
+      Answer4: Disipador
+      CorrectAnswerIndex: 1
+    - Question: "\xBFCu\xE1l es la funci\xF3n principal de la tarjeta de video?"
+      Answer1: Almacenar datos
+      Answer2: "Convertir datos en im\xE1genes para mostrar en pantalla"
+      Answer3: Generar sonido
+      Answer4: "Controlar energ\xEDa el\xE9ctrica"
+      CorrectAnswerIndex: 2
