@@ -1,18 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestionManager : Singleton<QuestionManager>
+public class QuestionsManager : Singleton<QuestionsManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    public QuestionUI Question;
+
+    public string CategoryName;
+
+    private CategoryGameManager _categorygameManager;
+
+    private QuestionModel _currentQuestion;
+
+    private void Start()
     {
-        
+        //Cache a reference
+        _categorygameManager = CategoryGameManager.Instance;
+        LoadNextQuestion();
     }
 
-    // Update is called once per frame
-    void Update()
+    void LoadNextQuestion()
     {
-        
+        _currentQuestion = _categorygameManager.GetQuestionForCategory(CategoryName);
+
+        if(_currentQuestion != null)
+        {
+            Question.PopulateQuestion(_currentQuestion);
+        }
+    }
+
+    public bool AnswerQuestion(int answerIndex)
+    {
+        return _currentQuestion.CorrectAnswerIndex == answerIndex;
     }
 }

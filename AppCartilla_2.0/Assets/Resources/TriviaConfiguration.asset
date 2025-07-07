@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TriviaConfiguration
   m_EditorClassIdentifier: 
   Categories:
-  - CategoryName: Hardware Interno
+  - CategoryName: HardwareInterno
     Questions:
     - Question: "\xBFCu\xE1l es el componente que se encarga de interpretar datos
         y enviar instrucciones a los programas?"
@@ -36,7 +36,7 @@ MonoBehaviour:
       Answer3: Tarjeta madre
       Answer4: Fuente de poder
       CorrectAnswerIndex: 0
-  - CategoryName: "Tarjeta Gr\xE1fica"
+  - CategoryName: "TarjetaGr\xE1fica"
     Questions:
     - Question: "\xBFQu\xE9 unidad se encarga del procesamiento gr\xE1fico dentro
         de una tarjeta de video?"
