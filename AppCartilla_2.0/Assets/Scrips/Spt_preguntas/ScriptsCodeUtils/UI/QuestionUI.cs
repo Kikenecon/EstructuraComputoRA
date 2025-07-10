@@ -28,4 +28,3 @@ public class QuestionUI : MonoBehaviour
         Answer4Label.text = questionModel.Answer4;
     }
 }
-//me quede en 15:26 del video
