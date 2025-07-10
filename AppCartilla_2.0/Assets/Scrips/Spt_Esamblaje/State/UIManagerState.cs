@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,8 +9,12 @@ namespace AssemblyGame
         public static UIManagerState Instance { get; private set; }
 
         private AssemblyGameManager gameManager;
-        private SceneUIManager currentSceneUIManager;
         private bool isPaused = false;
+
+        [SerializeField] private GameObject pauseCanvas;
+        [SerializeField] private GameObject levelCompleteCanvas;
+        [SerializeField] private GameObject gameOverCanvas;
+        [SerializeField] private TextMeshProUGUI nextPartText;
 
         private void Awake()
         {
@@ -27,6 +32,9 @@ namespace AssemblyGame
                 Debug.LogError("AssemblyGameManager no encontrado.");
             }
             SceneManager.sceneLoaded += OnSceneLoaded;
+
+            // Inicializa los canvases como inactivos
+            InitializeCanvases();
         }
 
         private void OnDestroy()
@@ -40,11 +48,30 @@ namespace AssemblyGame
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            currentSceneUIManager = FindObjectOfType<SceneUIManager>();
-            if (currentSceneUIManager == null)
-            {
-                Debug.LogError("SceneUIManager no encontrado en la escena actual: " + scene.name + ". Asegúrate de asignarlo.");
-            }
+            // Revalida las referencias y actualiza el texto
+            ValidateReferences();
+            UpdateNextPartText();
+        }
+
+        private void InitializeCanvases()
+        {
+            if (pauseCanvas) pauseCanvas.SetActive(false);
+            else Debug.LogWarning("PauseCanvas no asignado en UIManagerState.");
+            if (levelCompleteCanvas) levelCompleteCanvas.SetActive(false);
+            else Debug.LogWarning("LevelCompleteCanvas no asignado en UIManagerState.");
+            if (gameOverCanvas) gameOverCanvas.SetActive(false);
+            else Debug.LogWarning("GameOverCanvas no asignado en UIManagerState.");
+            if (nextPartText) nextPartText.gameObject.SetActive(true);
+            else Debug.LogWarning("NextPartText no asignado en UIManagerState.");
+        }
+
+        private void ValidateReferences()
+        {
+            // Reasigna referencias si se pierden (por ejemplo, al recargar escena)
+            if (pauseCanvas == null) pauseCanvas = transform.Find("PauseCanvas")?.gameObject;
+            if (levelCompleteCanvas == null) levelCompleteCanvas = transform.Find("LevelCompleteCanvas")?.gameObject;
+            if (gameOverCanvas == null) gameOverCanvas = transform.Find("GameOverCanvas")?.gameObject;
+            if (nextPartText == null) nextPartText = transform.Find("NextPartText")?.GetComponent<TextMeshProUGUI>();
         }
 
         public void OnPause()
@@ -52,15 +79,16 @@ namespace AssemblyGame
             if (isPaused) return;
             isPaused = true;
 
-            if (currentSceneUIManager != null)
+            if (pauseCanvas != null)
             {
-                currentSceneUIManager.ShowPauseCanvas(true);
+                pauseCanvas.SetActive(true);
                 gameManager.SetState(new PausedState());
                 Time.timeScale = 0f;
+                Debug.Log("PauseCanvas activado en escena: " + SceneManager.GetActiveScene().name);
             }
             else
             {
-                Debug.LogWarning("currentSceneUIManager es null en OnPause. No se puede mostrar el PauseCanvas.");
+                Debug.LogError("PauseCanvas no está asignado o encontrado en UIManagerState.");
             }
         }
 
@@ -69,74 +97,112 @@ namespace AssemblyGame
             if (!isPaused) return;
             isPaused = false;
 
-            if (currentSceneUIManager != null)
+            if (pauseCanvas != null)
             {
-                currentSceneUIManager.ShowPauseCanvas(false);
+                pauseCanvas.SetActive(false);
                 Time.timeScale = 1f;
                 gameManager.SetState(new PlayingState());
+                Debug.Log("PauseCanvas desactivado en escena: " + SceneManager.GetActiveScene().name);
             }
             else
             {
-                Debug.LogWarning("currentSceneUIManager es null en OnContinue. No se puede ocultar el PauseCanvas.");
+                Debug.LogError("PauseCanvas no está asignado o encontrado en UIManagerState.");
             }
         }
 
         public void OnNextLevel()
         {
-            if (currentSceneUIManager != null)
+            if (levelCompleteCanvas != null)
             {
-                currentSceneUIManager.ShowLevelCompleteCanvas(false);
+                levelCompleteCanvas.SetActive(false);
                 Time.timeScale = 1f;
                 gameManager.AdvanceToNextLevel();
+                Debug.Log("NextLevel activado en escena: " + SceneManager.GetActiveScene().name);
             }
         }
 
         public void OnRetry()
         {
-            if (currentSceneUIManager != null)
+            if (levelCompleteCanvas != null)
             {
-                currentSceneUIManager.ShowLevelCompleteCanvas(false);
+                levelCompleteCanvas.SetActive(false);
                 Time.timeScale = 1f;
                 gameManager.ResetGame();
+                Debug.Log("Retry activado en escena: " + SceneManager.GetActiveScene().name);
             }
         }
 
         public void OnExit()
         {
-            if (currentSceneUIManager != null)
+            if (levelCompleteCanvas != null)
             {
-                currentSceneUIManager.ShowLevelCompleteCanvas(false);
+                levelCompleteCanvas.SetActive(false);
                 Time.timeScale = 1f;
                 Application.Quit();
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
 #endif
+                Debug.Log("Exit activado en escena: " + SceneManager.GetActiveScene().name);
             }
+        }
+
+        public void OnExitToMenu()
+        {
+            if (pauseCanvas != null) pauseCanvas.SetActive(false);
+            if (levelCompleteCanvas != null) levelCompleteCanvas.SetActive(false);
+
+            if (gameManager != null)
+            {
+                gameManager.StopGame();
+                gameManager.ResetGame();
+            }
+
+            SceneManager.LoadScene("MenuScene"); // Cambia "MenuScene" por el nombre real
+            Debug.Log("ExitToMenu activado, cargando MenuScene");
         }
 
         public void ShowLevelComplete()
         {
-            if (currentSceneUIManager != null)
+            if (levelCompleteCanvas != null)
             {
-                currentSceneUIManager.ShowLevelCompleteCanvas(true);
+                levelCompleteCanvas.SetActive(true);
                 Time.timeScale = 0f;
+                Debug.Log("ShowLevelComplete activado en escena: " + SceneManager.GetActiveScene().name);
             }
             else
             {
-                Debug.LogWarning("currentSceneUIManager es null en ShowLevelComplete. No se puede mostrar el LevelCompleteCanvas.");
+                Debug.LogError("LevelCompleteCanvas no está asignado o encontrado en UIManagerState.");
             }
         }
 
         public void ShowGameOver()
         {
-            if (currentSceneUIManager != null)
+            if (gameOverCanvas != null)
             {
-                currentSceneUIManager.ShowGameOverCanvas(true);
+                gameOverCanvas.SetActive(true);
                 Time.timeScale = 0f;
+                Debug.Log("ShowGameOver activado en escena: " + SceneManager.GetActiveScene().name);
             }
             else
             {
-                Debug.LogWarning("currentSceneUIManager es null en ShowGameOver. No se puede mostrar el GameOverCanvas.");
+                Debug.LogError("GameOverCanvas no está asignado o encontrado en UIManagerState.");
+            }
+        }
+
+        private void UpdateNextPartText()
+        {
+            if (nextPartText != null && gameManager != null)
+            {
+                string nextPart = gameManager.GetNextPart();
+                string description = nextPart != null
+                    ? "Siguiente parte: " + nextPart
+                    : "¡Ensamblaje completo!";
+                nextPartText.text = description;
+                Debug.Log("NextPartText actualizado a: " + description + " en escena: " + SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                Debug.LogWarning("NextPartText o gameManager no asignado en UpdateNextPartText.");
             }
         }
     }

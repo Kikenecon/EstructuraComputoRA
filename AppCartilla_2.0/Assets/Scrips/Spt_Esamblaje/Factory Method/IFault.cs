@@ -6,6 +6,6 @@ namespace AssemblyGame
     {
         void MoveTowardsTarget(Vector2 targetPosition);
         void ApplyEffect(AssemblyGameManager gameManager);
-        void OnDestroy();
+        
     }
 }

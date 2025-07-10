@@ -7,11 +7,8 @@ namespace AssemblyGame
         public override IFault CreateFault(GameObject faultPrefab)
         {
             GameObject faultObject = Object.Instantiate(faultPrefab);
-            TimeFault fault = faultObject.AddComponent<TimeFault>();
-            faultObject.AddComponent<CanvasRenderer>();
-            faultObject.AddComponent<UnityEngine.UI.Image>();
-            RectTransform rectTransform = faultObject.GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = GetRandomSpawnPosition();
+            TimeFault fault = faultObject.GetComponent<TimeFault>() ?? faultObject.AddComponent<TimeFault>();
+            faultObject.transform.position = GetRandomSpawnPosition();
             return fault;
         }
     }
