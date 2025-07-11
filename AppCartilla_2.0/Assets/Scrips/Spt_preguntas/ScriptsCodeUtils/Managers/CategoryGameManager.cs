@@ -21,12 +21,19 @@ public class CategoryGameManager : Singleton<CategoryGameManager>
     public GameModel TriviaConfiguration;
     private string _currentCategory;
 
+    List<int> _askedQuestionIndex = new List<int>();
+
     public QuestionModel GetQuestionForCategory(string categoryName)
     {
         CategoryModel categoryModel = TriviaConfiguration.Categories.FirstOrDefault(predicate: category => category.CategoryName == categoryName);
-        if (categoryModel != null && categoryModel.Questions != null && categoryModel.Questions.Count > 0)
+        if (categoryModel != null && categoryModel.Questions != null && categoryModel.Questions.Count > 0) //
         {
-            return categoryModel.Questions[0];
+            int randomIndex = Random.Range(0, categoryModel.Questions.Count);
+            while(categoryModel.Questions.Count > _askedQuestionIndex.Count && _askedQuestionIndex.Contains(randomIndex))randomIndex = Random.Range(0, categoryModel.Questions.Count);
+
+            _askedQuestionIndex.Add(randomIndex);
+
+            return categoryModel.Questions[randomIndex];
         }
         return null;
     }
@@ -34,6 +41,7 @@ public class CategoryGameManager : Singleton<CategoryGameManager>
     public void SetCurrentCategory(string categoryName)
     {
         _currentCategory = categoryName;
+        _askedQuestionIndex.Clear();
     }
 
     public string GetCurrentCategory()
