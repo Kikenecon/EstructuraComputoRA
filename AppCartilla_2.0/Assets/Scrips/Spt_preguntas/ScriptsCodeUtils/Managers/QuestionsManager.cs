@@ -16,9 +16,9 @@ public class QuestionsManager : Singleton<QuestionsManager>
 
     public QuestionUI Question;
 
-    public string CategoryName;
-
     private CategoryGameManager _categorygameManager;
+
+    private string _currentCategory;
 
     private QuestionModel _currentQuestion;
 
@@ -26,19 +26,22 @@ public class QuestionsManager : Singleton<QuestionsManager>
     {
         //Cache a reference
         _categorygameManager = CategoryGameManager.Instance;
+
+        _currentCategory = _categorygameManager.GetCurrentCategory();
+
         LoadNextQuestion();
     }
 
     void LoadNextQuestion()
     {
-        _currentQuestion = _categorygameManager.GetQuestionForCategory(CategoryName);
+        _currentQuestion = _categorygameManager.GetQuestionForCategory(_currentCategory);
 
         if(_currentQuestion != null)
         {
             Question.PopulateQuestion(_currentQuestion);
         }
         OnNewQuestionLoaded?.Invoke();
-    }
+    } 
 
     public bool AnswerQuestion(int answerIndex)
     {

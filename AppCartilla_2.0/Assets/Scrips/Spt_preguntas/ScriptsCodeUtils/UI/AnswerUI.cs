@@ -42,8 +42,6 @@ public class AnswerUI : MonoBehaviour
                 IncorrectImage.DOFade(endValue: 1, duration: .5f);
             }
         }
-
-        
     }
 
     void AnswerProvided()
