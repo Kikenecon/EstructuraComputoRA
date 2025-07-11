@@ -1,194 +1,157 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace AssemblyGame
 {
     public class SceneUIManager : MonoBehaviour
     {
-        [SerializeField] private GameObject pauseCanvas;
-        [SerializeField] private GameObject levelCompleteCanvas;
-        [SerializeField] private GameObject gameOverCanvas;
-        [SerializeField] private TextMeshProUGUI nextPartText; // Nuevo campo para el texto de la próxima parte
+        [SerializeField] private GameObject pausePanel;
+        [SerializeField] private GameObject levelCompletePanel;
+        [SerializeField] private GameObject gameOverPanel;
+        [SerializeField] private TextMeshProUGUI nextPartText;
+        [SerializeField] private GameObject pauseButtonObject;
 
-        private UIManagerState uiManager;
+        private AssemblyGameManager gameManager;
+        private bool isPaused = false;
 
         private void Awake()
         {
-            uiManager = UIManagerState.Instance;
-            if (uiManager == null)
+            gameManager = AssemblyGameManager.getInstance();
+            if (gameManager == null)
             {
-                Debug.LogError("UIManagerState no encontrado. Asegúrate de que exista en la escena inicial.");
+                Debug.LogError("AssemblyGameManager no encontrado. Asegúrate de que exista en Level1Scene.");
                 return;
             }
 
-            if (pauseCanvas != null)
+            if (pausePanel != null) pausePanel.SetActive(false);
+            else Debug.LogWarning("PausePanel no asignado en SceneUIManager.");
+            if (levelCompletePanel != null) levelCompletePanel.SetActive(false);
+            else Debug.LogWarning("LevelCompletePanel no asignado en SceneUIManager.");
+            if (gameOverPanel != null) gameOverPanel.SetActive(false);
+            else Debug.LogWarning("GameOverPanel no asignado en SceneUIManager.");
+            if (nextPartText != null) nextPartText.gameObject.SetActive(true);
+            else Debug.LogWarning("NextPartText no asignado en SceneUIManager.");
+
+            if (pauseButtonObject != null)
             {
-                pauseCanvas.SetActive(false);
+                Button pauseButton = pauseButtonObject.GetComponent<Button>();
+                if (pauseButton == null)
+                {
+                    Debug.LogError("pauseButtonObject no tiene un componente Button.");
+                }
             }
             else
             {
-                Debug.LogWarning("PauseCanvas no asignado en SceneUIManager.");
-            }
-
-            if (levelCompleteCanvas != null)
-            {
-                levelCompleteCanvas.SetActive(false);
-            }
-            else
-            {
-                Debug.LogWarning("LevelCompleteCanvas no asignado en SceneUIManager.");
-            }
-
-            if (gameOverCanvas != null)
-            {
-                gameOverCanvas.SetActive(false);
-            }
-            else
-            {
-                Debug.LogWarning("GameOverCanvas no asignado en SceneUIManager.");
-            }
-
-            if (nextPartText != null)
-            {
-                nextPartText.gameObject.SetActive(true); // Asegura que el texto esté activo por defecto
-            }
-            else
-            {
-                Debug.LogWarning("nextPartText no asignado en SceneUIManager.");
-            }
-
-            SetupButtonEvents();
-        }
-
-        private void SetupButtonEvents()
-        {
-            if (levelCompleteCanvas != null)
-            {
-                Button nextLevelButton = levelCompleteCanvas.transform.Find("NextLevelButton")?.GetComponent<Button>();
-                if (nextLevelButton != null)
-                {
-                    nextLevelButton.onClick.RemoveAllListeners();
-                    nextLevelButton.onClick.AddListener(() => uiManager.OnNextLevel());
-                }
-                else
-                {
-                    Debug.LogWarning("NextLevelButton no encontrado en LevelCompleteCanvas.");
-                }
-
-                Button retryButton = levelCompleteCanvas.transform.Find("RetryButton")?.GetComponent<Button>();
-                if (retryButton != null)
-                {
-                    retryButton.onClick.RemoveAllListeners();
-                    retryButton.onClick.AddListener(() => uiManager.OnRetry());
-                }
-                else
-                {
-                    Debug.LogWarning("RetryButton no encontrado en LevelCompleteCanvas.");
-                }
-
-                Button exitButton = levelCompleteCanvas.transform.Find("ExitButton")?.GetComponent<Button>();
-                if (exitButton != null)
-                {
-                    exitButton.onClick.RemoveAllListeners();
-                    exitButton.onClick.AddListener(() => uiManager.OnExit());
-                }
-                else
-                {
-                    Debug.LogWarning("ExitButton no encontrado en LevelCompleteCanvas.");
-                }
-            }
-
-            if (pauseCanvas != null)
-            {
-                Button continueButton = pauseCanvas.transform.Find("ContinueButton")?.GetComponent<Button>();
-                if (continueButton != null)
-                {
-                    continueButton.onClick.RemoveAllListeners();
-                    continueButton.onClick.AddListener(() => uiManager.OnContinue());
-                }
-                else
-                {
-                    Debug.LogWarning("ContinueButton no encontrado en PauseCanvas.");
-                }
-            }
-
-            if (gameOverCanvas != null)
-            {
-                Button retryButton = gameOverCanvas.transform.Find("RetryButton")?.GetComponent<Button>();
-                if (retryButton != null)
-                {
-                    retryButton.onClick.RemoveAllListeners();
-                    retryButton.onClick.AddListener(() => uiManager.OnRetry());
-                }
-                else
-                {
-                    Debug.LogWarning("RetryButton no encontrado en GameOverCanvas.");
-                }
-
-                Button exitButton = gameOverCanvas.transform.Find("ExitButton")?.GetComponent<Button>();
-                if (exitButton != null)
-                {
-                    exitButton.onClick.RemoveAllListeners();
-                    exitButton.onClick.AddListener(() => uiManager.OnExit());
-                }
-                else
-                {
-                    Debug.LogWarning("ExitButton no encontrado en GameOverCanvas.");
-                }
-            }
-
-            Button pauseButton = GameObject.Find("PauseButton")?.GetComponent<Button>();
-            if (pauseButton != null)
-            {
-                pauseButton.onClick.RemoveAllListeners();
-                pauseButton.onClick.AddListener(() => uiManager.OnPause());
-                Debug.Log("PauseButton configurado correctamente en escena: " + gameObject.scene.name);
-            }
-            else
-            {
-                Debug.LogWarning("PauseButton no encontrado en la escena actual.");
+                Debug.LogWarning("pauseButtonObject no asignado en SceneUIManager.");
             }
         }
 
-        public void ShowPauseCanvas(bool show)
+        public void OnPause()
         {
-            if (pauseCanvas != null)
+            if (isPaused) return;
+            isPaused = true;
+            if (pausePanel != null)
             {
-                pauseCanvas.SetActive(show);
+                pausePanel.SetActive(true);
+                gameManager.SetState(new PausedState());
+                Time.timeScale = 0f;
+                Debug.Log("PausePanel activado.");
             }
             else
             {
-                Debug.LogWarning("PauseCanvas es null en ShowPauseCanvas.");
+                Debug.LogError("PausePanel no está asignado.");
             }
         }
 
-        public void ShowLevelCompleteCanvas(bool show)
+        public void OnContinue()
         {
-            if (levelCompleteCanvas != null)
+            if (!isPaused) return;
+            isPaused = false;
+            if (pausePanel != null)
             {
-                levelCompleteCanvas.SetActive(show);
+                pausePanel.SetActive(false);
+                Time.timeScale = 1f;
+                gameManager.SetState(new PlayingState());
+                Debug.Log("PausePanel desactivado.");
             }
             else
             {
-                Debug.LogWarning("LevelCompleteCanvas es null en ShowLevelCompleteCanvas.");
+                Debug.LogError("PausePanel no está asignado.");
             }
         }
 
-        public void ShowGameOverCanvas(bool show)
+        public void OnNextLevel()
         {
-            if (gameOverCanvas != null)
+            if (levelCompletePanel != null)
             {
-                gameOverCanvas.SetActive(show);
+                levelCompletePanel.SetActive(false);
+                Time.timeScale = 1f;
+                gameManager.AdvanceToNextLevel();
+                Debug.Log("NextLevel activado.");
+            }
+        }
+
+        public void OnRetry()
+        {
+            if (levelCompletePanel != null || gameOverPanel != null)
+            {
+                if (levelCompletePanel != null) levelCompletePanel.SetActive(false);
+                if (gameOverPanel != null) gameOverPanel.SetActive(false);
+                Time.timeScale = 1f;
+                gameManager.ResetGame();
+                SceneManager.LoadScene("Level1Scene");
+                Debug.Log("Retry activado.");
+            }
+        }
+
+        public void OnExit()
+        {
+            if (levelCompletePanel != null || gameOverPanel != null)
+            {
+                if (levelCompletePanel != null) levelCompletePanel.SetActive(false);
+                if (gameOverPanel != null) gameOverPanel.SetActive(false);
+                Time.timeScale = 1f;
+                gameManager.ResetGame(); // Reinicia todos los valores
+                SceneManager.LoadScene("Menu_Ensamblaje"); // Carga el menú
+                Debug.Log("Juego reiniciado y enviado a Menu_Ensamblaje.");
+            }
+        }
+
+        public void ShowLevelCompletePanel(bool show)
+        {
+            if (levelCompletePanel != null)
+            {
+                levelCompletePanel.SetActive(show);
+                if (show) Time.timeScale = 0f;
+                else Time.timeScale = 1f;
+                Debug.Log($"ShowLevelCompletePanel: {show}");
             }
             else
             {
-                Debug.LogWarning("GameOverCanvas es null en ShowGameOverCanvas.");
+                Debug.LogError("levelCompletePanel no está asignado.");
+            }
+        }
+
+        public void ShowGameOverPanel(bool show)
+        {
+            if (gameOverPanel != null)
+            {
+                gameOverPanel.SetActive(show);
+                if (show) Time.timeScale = 0f;
+                else Time.timeScale = 1f;
+                Debug.Log($"ShowGameOverPanel: {show}");
+            }
+            else
+            {
+                Debug.LogError("gameOverPanel no está asignado.");
             }
         }
     }
 }
 
+//using TMPro;
 //using UnityEngine;
 //using UnityEngine.UI;
 
@@ -196,173 +159,146 @@ namespace AssemblyGame
 //{
 //    public class SceneUIManager : MonoBehaviour
 //    {
-//        [SerializeField] private GameObject pauseCanvas;
-//        [SerializeField] private GameObject levelCompleteCanvas;
-//        [SerializeField] private GameObject gameOverCanvas;
-//        private UIManagerState uiManager;
+//        [SerializeField] private GameObject pausePanel;
+//        [SerializeField] private GameObject levelCompletePanel;
+//        [SerializeField] private GameObject gameOverPanel;
+//        [SerializeField] private TextMeshProUGUI nextPartText;
+//        [SerializeField] private GameObject pauseButtonObject;
+
+//        private AssemblyGameManager gameManager;
+//        private bool isPaused = false;
 
 //        private void Awake()
 //        {
-//            uiManager = UIManagerState.Instance;
-//            if (uiManager == null)
+//            gameManager = AssemblyGameManager.getInstance();
+//            if (gameManager == null)
 //            {
-//                Debug.LogError("UIManagerState no encontrado. Asegúrate de que exista en la escena inicial.");
+//                Debug.LogError("AssemblyGameManager no encontrado. Asegúrate de que exista en Level1Scene.");
 //                return;
 //            }
 
-//            if (pauseCanvas != null)
+//            if (pausePanel != null) pausePanel.SetActive(false);
+//            else Debug.LogWarning("PausePanel no asignado en SceneUIManager.");
+//            if (levelCompletePanel != null) levelCompletePanel.SetActive(false);
+//            else Debug.LogWarning("LevelCompletePanel no asignado en SceneUIManager.");
+//            if (gameOverPanel != null) gameOverPanel.SetActive(false);
+//            else Debug.LogWarning("GameOverPanel no asignado en SceneUIManager.");
+//            if (nextPartText != null) nextPartText.gameObject.SetActive(true);
+//            else Debug.LogWarning("NextPartText no asignado en SceneUIManager.");
+
+//            if (pauseButtonObject != null)
 //            {
-//                pauseCanvas.SetActive(false);
+//                Button pauseButton = pauseButtonObject.GetComponent<Button>();
+//                if (pauseButton == null)
+//                {
+//                    Debug.LogError("pauseButtonObject no tiene un componente Button.");
+//                }
 //            }
 //            else
 //            {
-//                Debug.LogWarning("PauseCanvas no asignado en SceneUIManager.");
-//            }
-
-//            if (levelCompleteCanvas != null)
-//            {
-//                levelCompleteCanvas.SetActive(false);
-//            }
-//            else
-//            {
-//                Debug.LogWarning("LevelCompleteCanvas no asignado en SceneUIManager.");
-//            }
-
-//            if (gameOverCanvas != null)
-//            {
-//                gameOverCanvas.SetActive(false);
-//            }
-//            else
-//            {
-//                Debug.LogWarning("GameOverCanvas no asignado en SceneUIManager.");
-//            }
-
-//            SetupButtonEvents();
-//        }
-
-//        private void SetupButtonEvents()
-//        {
-//            if (levelCompleteCanvas != null)
-//            {
-//                Button nextLevelButton = levelCompleteCanvas.transform.Find("NextLevelButton")?.GetComponent<Button>();
-//                if (nextLevelButton != null)
-//                {
-//                    nextLevelButton.onClick.RemoveAllListeners();
-//                    nextLevelButton.onClick.AddListener(() => uiManager.OnNextLevel());
-//                }
-//                else
-//                {
-//                    Debug.LogWarning("NextLevelButton no encontrado en LevelCompleteCanvas.");
-//                }
-
-//                Button retryButton = levelCompleteCanvas.transform.Find("RetryButton")?.GetComponent<Button>();
-//                if (retryButton != null)
-//                {
-//                    retryButton.onClick.RemoveAllListeners();
-//                    retryButton.onClick.AddListener(() => uiManager.OnRetry());
-//                }
-//                else
-//                {
-//                    Debug.LogWarning("RetryButton no encontrado en LevelCompleteCanvas.");
-//                }
-
-//                Button exitButton = levelCompleteCanvas.transform.Find("ExitButton")?.GetComponent<Button>();
-//                if (exitButton != null)
-//                {
-//                    exitButton.onClick.RemoveAllListeners();
-//                    exitButton.onClick.AddListener(() => uiManager.OnExit());
-//                }
-//                else
-//                {
-//                    Debug.LogWarning("ExitButton no encontrado en LevelCompleteCanvas.");
-//                }
-//            }
-
-//            if (pauseCanvas != null)
-//            {
-//                Button continueButton = pauseCanvas.transform.Find("ContinueButton")?.GetComponent<Button>();
-//                if (continueButton != null)
-//                {
-//                    continueButton.onClick.RemoveAllListeners();
-//                    continueButton.onClick.AddListener(() => uiManager.OnContinue());
-//                }
-//                else
-//                {
-//                    Debug.LogWarning("ContinueButton no encontrado en PauseCanvas.");
-//                }
-//            }
-
-//            if (gameOverCanvas != null)
-//            {
-//                Button retryButton = gameOverCanvas.transform.Find("RetryButton")?.GetComponent<Button>();
-//                if (retryButton != null)
-//                {
-//                    retryButton.onClick.RemoveAllListeners();
-//                    retryButton.onClick.AddListener(() => uiManager.OnRetry());
-//                }
-//                else
-//                {
-//                    Debug.LogWarning("RetryButton no encontrado en GameOverCanvas.");
-//                }
-
-//                Button exitButton = gameOverCanvas.transform.Find("ExitButton")?.GetComponent<Button>();
-//                if (exitButton != null)
-//                {
-//                    exitButton.onClick.RemoveAllListeners();
-//                    exitButton.onClick.AddListener(() => uiManager.OnExit());
-//                }
-//                else
-//                {
-//                    Debug.LogWarning("ExitButton no encontrado en GameOverCanvas.");
-//                }
-//            }
-
-//            Button pauseButton = GameObject.Find("PauseButton")?.GetComponent<Button>();
-//            if (pauseButton != null)
-//            {
-//                pauseButton.onClick.RemoveAllListeners();
-//                pauseButton.onClick.AddListener(() => uiManager.OnPause());
-//                Debug.Log("PauseButton configurado correctamente en escena: " + gameObject.scene.name);
-//            }
-//            else
-//            {
-//                Debug.LogWarning("PauseButton no encontrado en la escena actual.");
+//                Debug.LogWarning("pauseButtonObject no asignado en SceneUIManager.");
 //            }
 //        }
 
-//        public void ShowPauseCanvas(bool show)
+//        public void OnPause()
 //        {
-//            if (pauseCanvas != null)
+//            if (isPaused) return;
+//            isPaused = true;
+//            if (pausePanel != null)
 //            {
-//                pauseCanvas.SetActive(show);
+//                pausePanel.SetActive(true);
+//                gameManager.SetState(new PausedState());
+//                Time.timeScale = 0f;
+//                Debug.Log("PausePanel activado.");
 //            }
 //            else
 //            {
-//                Debug.LogWarning("PauseCanvas es null en ShowPauseCanvas.");
+//                Debug.LogError("PausePanel no está asignado.");
 //            }
 //        }
 
-//        public void ShowLevelCompleteCanvas(bool show)
+//        public void OnContinue()
 //        {
-//            if (levelCompleteCanvas != null)
+//            if (!isPaused) return;
+//            isPaused = false;
+//            if (pausePanel != null)
 //            {
-//                levelCompleteCanvas.SetActive(show);
+//                pausePanel.SetActive(false);
+//                Time.timeScale = 1f;
+//                gameManager.SetState(new PlayingState());
+//                Debug.Log("PausePanel desactivado.");
 //            }
 //            else
 //            {
-//                Debug.LogWarning("LevelCompleteCanvas es null en ShowLevelCompleteCanvas.");
+//                Debug.LogError("PausePanel no está asignado.");
 //            }
 //        }
 
-//        public void ShowGameOverCanvas(bool show)
+//        public void OnNextLevel()
 //        {
-//            if (gameOverCanvas != null)
+//            if (levelCompletePanel != null)
 //            {
-//                gameOverCanvas.SetActive(show);
+//                levelCompletePanel.SetActive(false);
+//                Time.timeScale = 1f;
+//                gameManager.AdvanceToNextLevel();
+//                Debug.Log("NextLevel activado.");
+//            }
+//        }
+
+//        public void OnRetry()
+//        {
+//            if (levelCompletePanel != null || gameOverPanel != null)
+//            {
+//                if (levelCompletePanel != null) levelCompletePanel.SetActive(false);
+//                if (gameOverPanel != null) gameOverPanel.SetActive(false);
+//                Time.timeScale = 1f;
+//                gameManager.ResetGame();
+//                Debug.Log("Retry activado.");
+//            }
+//        }
+
+//        public void OnExit()
+//        {
+//            if (levelCompletePanel != null || gameOverPanel != null)
+//            {
+//                if (levelCompletePanel != null) levelCompletePanel.SetActive(false);
+//                if (gameOverPanel != null) gameOverPanel.SetActive(false);
+//                Time.timeScale = 1f;
+//                Application.Quit();
+//#if UNITY_EDITOR
+//                UnityEditor.EditorApplication.isPlaying = false;
+//#endif
+//                Debug.Log("Exit activado.");
+//            }
+//        }
+
+//        public void ShowLevelCompletePanel(bool show)
+//        {
+//            if (levelCompletePanel != null)
+//            {
+//                levelCompletePanel.SetActive(show);
+//                if (show) Time.timeScale = 0f;
+//                else Time.timeScale = 1f;
+//                Debug.Log($"ShowLevelCompletePanel: {show}");
 //            }
 //            else
 //            {
-//                Debug.LogWarning("GameOverCanvas es null en ShowGameOverCanvas.");
+//                Debug.LogError("levelCompletePanel no está asignado.");
+//            }
+//        }
+
+//        public void ShowGameOverPanel(bool show)
+//        {
+//            if (gameOverPanel != null)
+//            {
+//                gameOverPanel.SetActive(show);
+//                if (show) Time.timeScale = 0f;
+//                else Time.timeScale = 1f;
+//                Debug.Log($"ShowGameOverPanel: {show}");
+//            }
+//            else
+//            {
+//                Debug.LogError("gameOverPanel no está asignado.");
 //            }
 //        }
 //    }

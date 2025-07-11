@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 namespace AssemblyGame
 {
@@ -8,41 +9,37 @@ namespace AssemblyGame
         private float timeToLive = 5f;
         private float currentTime = 0f;
         private bool hasBeenClicked = false;
+        private bool effectApplied = false;
+        private bool isDestroying = false;
 
         private Vector2 targetPosition;
-        private float speed = 200f; // Velocidad de movimiento
-        private float changeDirectionTime = 1.5f; // Tiempo entre cambios de dirección
+        private float speed = 200f;
+        private float changeDirectionTime = 1.5f;
         private float directionTimer = 0f;
 
         private RectTransform rectTransform;
         private Vector2 canvasSize;
+        private Animator animator;
 
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
             if (rectTransform == null)
-            {
                 rectTransform = gameObject.AddComponent<RectTransform>();
-            }
 
             if (GetComponent<UnityEngine.UI.Image>() == null)
-            {
                 gameObject.AddComponent<UnityEngine.UI.Image>();
-            }
 
-            // Obtener las dimensiones del Canvas
+            animator = GetComponent<Animator>();
+            if (animator == null)
+                Debug.LogWarning("Animator no encontrado en Fault.");
+
             Canvas canvas = GameObject.Find("Canvas")?.GetComponent<Canvas>();
             if (canvas != null)
-            {
-                RectTransform canvasRect = canvas.GetComponent<RectTransform>();
-                canvasSize = canvasRect.sizeDelta;
-            }
+                canvasSize = canvas.GetComponent<RectTransform>().sizeDelta;
             else
-            {
-                canvasSize = new Vector2(1080f, 1920f); // Valor por defecto si no se encuentra el Canvas
-            }
+                canvasSize = new Vector2(1080f, 1920f);
 
-            // Elegir una posición inicial aleatoria dentro del Canvas
             targetPosition = GetRandomPositionInCanvas();
         }
 
@@ -50,7 +47,7 @@ namespace AssemblyGame
         {
             float canvasWidth = canvasSize.x / 2f;
             float canvasHeight = canvasSize.y / 2f;
-            float offset = 50f; // Margen de seguridad
+            float offset = 50f;
 
             return new Vector2(
                 Random.Range(-canvasWidth + offset, canvasWidth - offset),
@@ -70,8 +67,13 @@ namespace AssemblyGame
             }
             else
             {
-                // Si llegamos a la posición objetivo, elegir una nueva
                 this.targetPosition = GetRandomPositionInCanvas();
+            }
+
+            if (animator != null)
+            {
+                bool movingRight = currentPosition.x < targetPosition.x;
+                transform.localScale = new Vector3(movingRight ? 1f : -1f, 1f, 1f);
             }
         }
 
@@ -82,30 +84,57 @@ namespace AssemblyGame
 
         public abstract void ApplyEffect(AssemblyGameManager gameManager);
 
-        public virtual void OnDestroy()
+        private IEnumerator WaitAndDestroy()
         {
-            Debug.Log("Fault destroyed.");
+            isDestroying = true;
+
+            if (animator != null)
+            {
+                animator.SetTrigger("DestroyTrigger");
+
+                // Esperar a que la animación termine (1 segundo por defecto si no detecta bien)
+                yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length > 0
+                    ? animator.GetCurrentAnimatorClipInfo(0)[0].clip.length
+                    : 1f);
+            }
+
+            Destroy(gameObject);
+        }
+
+        
+
+        private void PlayDestroyAnimationAndDie(bool applyEffect)
+        {
+            if (isDestroying) return; // ya se está destruyendo
+
+            if (applyEffect && !effectApplied)
+            {
+                ApplyEffect(AssemblyGameManager.getInstance());
+                effectApplied = true;
+            }
+
+            StartCoroutine(WaitAndDestroy());
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log("Fault clicked, destroying...");
-            hasBeenClicked = true;
-            Destroy(gameObject);
+            if (!hasBeenClicked)
+            {
+                hasBeenClicked = true;
+                PlayDestroyAnimationAndDie(applyEffect: false);
+            }
         }
 
         private void Update()
         {
-            // Temporizador de autodestrucción
             currentTime += Time.deltaTime;
-            if (currentTime >= timeToLive && !hasBeenClicked)
+
+            if (currentTime >= timeToLive && !hasBeenClicked && !effectApplied)
             {
-                ApplyEffect(AssemblyGameManager.getInstance());
-                Destroy(gameObject);
+                PlayDestroyAnimationAndDie(applyEffect: true);
                 return;
             }
 
-            // Movimiento aleatorio
             directionTimer += Time.deltaTime;
             if (directionTimer >= changeDirectionTime)
             {
@@ -116,4 +145,6 @@ namespace AssemblyGame
             MoveTowardsTarget(targetPosition);
         }
     }
+
+
 }

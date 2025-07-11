@@ -12,28 +12,28 @@ namespace AssemblyGame
             {
                 1, new Dictionary<string, string>
                 {
-                    { "Cooler", "Este es el disipador que enfría el procesador. Colócalo primero para evitar sobrecalentamiento." },
-                    { "CPU", "El cerebro de la PC. Inserta este chip en el zócalo correspondiente." },
-                    { "RAM", "La memoria principal. Añade estos módulos para mejorar el rendimiento." }
+                    { "Cooler", "Sin esta pieza, el calor del trabajo se acumularía en el corazón del sistema." },
+                    { "CPU", "Este pequeño cuadrado coordina todas las instrucciones que circulan dentro del equipo." },
+                    { "RAM", "Aquí se almacenan temporalmente los pensamientos de la máquina mientras trabaja." }
                 }
             },
             {
                 2, new Dictionary<string, string>
                 {
-                    { "CPU", "El procesador clave. Conecta este chip en el zócalo central." },
-                    { "RAM", "Módulos de memoria esenciales. Instálalos en las ranuras adecuadas." },
-                    { "GraphicsCard", "La tarjeta gráfica. Colócala para gráficos avanzados." },
-                    { "Cooler", "El sistema de enfriamiento. Asegúralo sobre el procesador." }
+                    { "CPU", "Es el primer componente que debe recibir energía para que todo funcione con lógica." },
+                    { "RAM", "Si este módulo no está presente, el sistema olvida lo que hace apenas lo intenta." },
+                    { "GraphicsCard", "Permite a la máquina imaginar imágenes, juegos y videos con gran detalle." },
+                    { "Cooler", "Aunque no piensa ni procesa, su tarea es vital para que el centro no colapse por calor." }
                 }
             },
             {
                 3, new Dictionary<string, string>
                 {
-                    { "RAM", "Memoria vital para el sistema. Colócala en las ranuras designadas." },
-                    { "PowerSupply", "La fuente de energía. Conéctala para alimentar todo." },
-                    { "CPU", "El núcleo del procesamiento. Instala este chip con cuidado." },
-                    { "GraphicsCard", "Tarjeta gráfica potente. Fíjala en su slot." },
-                    { "Cooler", "Disipador esencial. Asegúralo sobre el CPU." }
+                    { "RAM", "Se ubica cerca del procesador y actúa como su memoria inmediata." },
+                    { "PowerSupply", "Sin esta pieza, ninguna otra recibiría vida ni electricidad." },
+                    { "CPU", "Coordina cada proceso, pero es inútil si no está rodeado de los elementos correctos." },
+                    { "GraphicsCard", "Traductor visual entre los datos y tu pantalla." },
+                    { "Cooler", "Silencioso pero esencial: protege al componente más caliente del sistema." }
                 }
             }
         };
