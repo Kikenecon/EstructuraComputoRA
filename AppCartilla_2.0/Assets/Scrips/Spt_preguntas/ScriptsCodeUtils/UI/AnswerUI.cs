@@ -28,18 +28,16 @@ public class AnswerUI : MonoBehaviour
 
     public void OnAnswerClicked()
     {
-        if (_canBeClicked)
+        if (_canBeClicked && CorrectImage != null && IncorrectImage != null)
         {
-            //Debug.Log(message: "Answer was Clicked!");
             bool result = QuestionsManager.Instance.AnswerQuestion(AnswerIndex);
-            //Debug.Log(result);
             if (result)
             {
-                CorrectImage.DOFade(endValue: 1, duration: .5f);
+                CorrectImage.DOFade(endValue: 1, duration: 0.5f);
             }
             else
             {
-                IncorrectImage.DOFade(endValue: 1, duration: .5f);
+                IncorrectImage.DOFade(endValue: 1, duration: 0.5f);
             }
         }
     }

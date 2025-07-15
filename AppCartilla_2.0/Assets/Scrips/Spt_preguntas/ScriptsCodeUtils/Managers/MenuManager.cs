@@ -9,12 +9,12 @@ public class MenuManager : MonoBehaviour
         PanelEvents.OnPanelManagerInitialized += ShowMainScreen;
     }
 
-    private void Ondisable()
+    private void OnDisable()
     {
-        PanelEvents.OnPanelManagerInitialized += ShowMainScreen;
+        PanelEvents.OnPanelManagerInitialized -= ShowMainScreen;
     }
 
-     void ShowMainScreen()
+    void ShowMainScreen()
     {
         PanelManager.Instance.ShowPanel("MainScreen");
     }

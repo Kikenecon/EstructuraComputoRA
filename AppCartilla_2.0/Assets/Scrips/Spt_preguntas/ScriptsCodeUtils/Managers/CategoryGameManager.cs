@@ -26,17 +26,25 @@ public class CategoryGameManager : Singleton<CategoryGameManager>
     public QuestionModel GetQuestionForCategory(string categoryName)
     {
         CategoryModel categoryModel = TriviaConfiguration.Categories.FirstOrDefault(predicate: category => category.CategoryName == categoryName);
-        if (categoryModel != null && categoryModel.Questions != null && categoryModel.Questions.Count > 0) //
+        if (categoryModel != null && categoryModel.Questions != null && categoryModel.Questions.Count > 0)
         {
+            if (_askedQuestionIndex.Count >= categoryModel.Questions.Count)
+            {
+                _askedQuestionIndex.Clear();
+            }
+
             int randomIndex = Random.Range(0, categoryModel.Questions.Count);
-            while(categoryModel.Questions.Count > _askedQuestionIndex.Count && _askedQuestionIndex.Contains(randomIndex))randomIndex = Random.Range(0, categoryModel.Questions.Count);
+            while (_askedQuestionIndex.Contains(randomIndex) && _askedQuestionIndex.Count < categoryModel.Questions.Count)
+            {
+                randomIndex = Random.Range(0, categoryModel.Questions.Count);
+            }
 
             _askedQuestionIndex.Add(randomIndex);
-
             return categoryModel.Questions[randomIndex];
         }
         return null;
     }
+
 
     public void SetCurrentCategory(string categoryName)
     {

@@ -7,8 +7,8 @@ using DG.Tweening;
 public class QuestionsManager : Singleton<QuestionsManager>
 {
     public static Action OnNewQuestionLoaded;
-
     public static Action OnAnswerProvided;
+    public static Action OnQuestionsCompleted;
 
     public Transform CorrectImage;
 
@@ -22,13 +22,29 @@ public class QuestionsManager : Singleton<QuestionsManager>
 
     private QuestionModel _currentQuestion;
 
-    private void Start()
+    /*private void Start()
     {
         //Cache a reference
         _categorygameManager = CategoryGameManager.Instance;
 
         _currentCategory = _categorygameManager.GetCurrentCategory();
 
+        LoadNextQuestion();
+    }     Codigo Anterior*/
+    private void Start()
+    {
+        _categorygameManager = CategoryGameManager.Instance;
+        if (_categorygameManager == null)
+        {
+            Debug.LogError("CategoryGameManager no encontrado.");
+            return;
+        }
+        _currentCategory = _categorygameManager.GetCurrentCategory();
+        if (string.IsNullOrEmpty(_currentCategory))
+        {
+            Debug.LogError("No se pudo obtener una categoría válida.");
+            return;
+        }
         LoadNextQuestion();
     }
 
@@ -38,6 +54,7 @@ public class QuestionsManager : Singleton<QuestionsManager>
 
         if(_currentQuestion != null)
         {
+           
             Question.PopulateQuestion(_currentQuestion);
         }
         OnNewQuestionLoaded?.Invoke();
@@ -45,6 +62,11 @@ public class QuestionsManager : Singleton<QuestionsManager>
 
     public bool AnswerQuestion(int answerIndex)
     {
+        if (_currentQuestion == null)
+        {
+            Debug.LogError("No hay pregunta actual cargada.");
+            return false;
+        }
         OnAnswerProvided?.Invoke();
 
         bool isCorrect = _currentQuestion.CorrectAnswerIndex == answerIndex;
@@ -68,4 +90,7 @@ public class QuestionsManager : Singleton<QuestionsManager>
         result.Append(resultTransform.DOScale(endValue: 0, duration: .2f).SetEase(Ease.Linear)); //
         result.AppendCallback(LoadNextQuestion);
     }
+
+
+
 }
