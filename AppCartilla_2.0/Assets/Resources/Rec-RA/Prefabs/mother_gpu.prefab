@@ -53,8 +53,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0327541, y: 0.5348916, z: 0.4628326}
-  m_Center: {x: -0.003275454, y: 0.25875747, z: 0.0065508634}
+  m_Size: {x: 1.4343807, y: 0.6855016, z: 0.5012233}
+  m_Center: {x: 0.005583942, y: 0.1125772, z: -0.012644529}
 --- !u!114 &-272976793932290381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,17 +98,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: fc80e91552acb7942bdfac4993f40081,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.006773768
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fc80e91552acb7942bdfac4993f40081,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.19
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fc80e91552acb7942bdfac4993f40081,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.004581487
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fc80e91552acb7942bdfac4993f40081,
         type: 3}
@@ -149,6 +149,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GPU_Nvidia_RTX_2080 (merge)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687685137274031872, guid: fc80e91552acb7942bdfac4993f40081,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
