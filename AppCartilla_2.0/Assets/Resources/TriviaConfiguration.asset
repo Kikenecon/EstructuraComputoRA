@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6f8a8d2baf91a4d9e3f29b012f1785, type: 3}
+  m_Name: TriviaConfiguration
+  m_EditorClassIdentifier: 
+  Categories:
+  - CategoryName: Almacenamiento
+    Questions:
+    - Question: "\xBFQu\xE9 tipo de componente es el disco duro (HDD)?"
+      Answer1: "Almacenamiento no vol\xE1til"
+      Answer2: Unidad de procesamiento
+      Answer3: "Tarjeta gr\xE1fica"
+      Answer4: Refrigerador de datos
+      CorrectAnswerIndex: 1
+    - Question: "\xBFQu\xE9 componente realiza la lectura y escritura en el disco
+        duro?"
+      Answer1: "Brazo mec\xE1nico"
+      Answer2: Cabezal de lectura
+      Answer3: Motor
+      Answer4: VRAM
+      CorrectAnswerIndex: 2
+    - Question: "\xBFQu\xE9 diferencia principal tienen los discos SSD respecto a
+        los HDD?"
+      Answer1: "Los SSD son m\xE1s lentos"
+      Answer2: "Los SSD no tienen partes mec\xE1nicas"
+      Answer3: Los HDD no almacenan datos
+      Answer4: "Los HDD son m\xE1s caros"
+      CorrectAnswerIndex: 2
+  - CategoryName: "Perif\xE9ricosExternos"
+    Questions:
+    - Question: "\xBFCu\xE1l de los siguientes es un perif\xE9rico de entrada?"
+      Answer1: Monitor
+      Answer2: Altavoz
+      Answer3: Teclado
+      Answer4: Tarjeta de red
+      CorrectAnswerIndex: 3
+    - Question: "\xBFCu\xE1l es la funci\xF3n principal del mouse?"
+      Answer1: "Procesar im\xE1genes"
+      Answer2: Interactuar con la interfaz mediante un puntero
+      Answer3: Conectar a internet
+      Answer4: Emitir sonido
+      CorrectAnswerIndex: 2
+    - Question: "\xBFQu\xE9 puerto fue reemplazado por USB para teclados y ratones?"
+      Answer1: HDMI
+      Answer2: VGA
+      Answer3: PS/2
+      Answer4: SATA
+      CorrectAnswerIndex: 3
+  - CategoryName: TarjetaMadre
+    Questions:
+    - Question: "\xBFCu\xE1l es la funci\xF3n principal de la tarjeta madre?"
+      Answer1: "Procesar gr\xE1ficos"
+      Answer2: Almacenar datos
+      Answer3: Conectar todos los componentes del computador
+      Answer4: Generar electricidad
+      CorrectAnswerIndex: 3
+    - Question: "\xBFQu\xE9 componente permite reconocer dispositivos y cargar el
+        sistema operativo?"
+      Answer1: RAM
+      Answer2: ' BIOS'
+      Answer3: GPU
+      Answer4: CPU
+      CorrectAnswerIndex: 2
+    - Question: "\xBFQu\xE9 elemento NO pertenece a la tarjeta madre?"
+      Answer1: Disco duro
+      Answer2: "Z\xF3calos de CPU"
+      Answer3: Ranuras de RAM
+      Answer4: Chipset
+      CorrectAnswerIndex: 1
+  - CategoryName: Procesador
+    Questions:
+    - Question: "\xBFQu\xE9 significa CPU?"
+      Answer1: Unidad Central de Procesamiento
+      Answer2: Unidad de Control de Puertos
+      Answer3: "Computador Port\xE1til \xDAnico"
+      Answer4: Conector Principal Unificado
+      CorrectAnswerIndex: 1
+    - Question: "\xBFQu\xE9 funci\xF3n NO realiza el procesador?"
+      Answer1: "Ejecutar operaciones l\xF3gicas"
+      Answer2: Almacenar permanentemente datos
+      Answer3: Controlar el hardware y software
+      Answer4: Calcular procesos
+      CorrectAnswerIndex: 2
+    - Question: "\xBFQu\xE9 caracter\xEDstica determina la cantidad de tareas simult\xE1neas
+        de un procesador?"
+      Answer1: "N\xFAmero de n\xFAcleos"
+      Answer2: "Tama\xF1o del ventilador"
+      Answer3: Velocidad del ventilador
+      Answer4: Tipo de monitor
+      CorrectAnswerIndex: 1
+  - CategoryName: MemoriaRAM
+    Questions:
+    - Question: "\xBFQu\xE9 funci\xF3n cumple la memoria RAM en el computador?"
+      Answer1: Almacenar datos temporalmente mientras se ejecutan programas
+      Answer2: Almacenar datos permanentemente
+      Answer3: "Ejecutar gr\xE1ficos"
+      Answer4: Enfriar el sistema
+      CorrectAnswerIndex: 1
+    - Question: "\xBFCu\xE1l es el tipo de memoria RAM que se encuentra en port\xE1tiles?"
+      Answer1: DDR4
+      Answer2: DIMM
+      Answer3: SODIMM
+      Answer4: ROM
+      CorrectAnswerIndex: 3
+    - Question: "\xBFQu\xE9 parte de la RAM se encarga de la sincronizaci\xF3n con
+        el procesador?"
+      Answer1: Placa de la Ram
+      Answer2: Reloj
+      Answer3: Chip SPD
+      Answer4: Banco de memoria
+      CorrectAnswerIndex: 2
+  - CategoryName: "TarjetaGr\xE1fica"
+    Questions:
+    - Question: "\xBFQu\xE9 hace la GPU dentro de la tarjeta gr\xE1fica?"
+      Answer1: "Procesa datos gr\xE1ficos"
+      Answer2: Refrigera el procesador
+      Answer3: 'Conecta la red '
+      Answer4: Almacena datos
+      CorrectAnswerIndex: 1
+    - Question: "\xBFQu\xE9 tipo de memoria contiene la tarjeta gr\xE1fica para almacenar
+        informaci\xF3n visual?"
+      Answer1: ROM
+      Answer2: VRAM
+      Answer3: RAMDAC
+      Answer4: SODIMM
+      CorrectAnswerIndex: 2
+    - Question: "\xBFQu\xE9 hace el RAMDAC en una tarjeta gr\xE1fica?"
+      Answer1: "Procesar gr\xE1ficos"
+      Answer2: Regular voltajes
+      Answer3: "Convertir se\xF1ales digitales en anal\xF3gicas"
+      Answer4: Ejecutar el sistema operativo
+      CorrectAnswerIndex: 3
+  - CategoryName: Computador
+    Questions:
+    - Question: "\xBFQu\xE9 tipo de computadora es ideal para cient\xEDficos y simulaciones
+        complejas?"
+      Answer1: "Port\xE1til"
+      Answer2: Supercomputadora
+      Answer3: All-in-one
+      Answer4: "H\xEDbrida"
+      CorrectAnswerIndex: 2
+    - Question: "\xBFQu\xE9 combinaci\xF3n representa las dos partes b\xE1sicas de
+        una computadora?"
+      Answer1: Hardware y Software
+      Answer2: Disco duro y RAM
+      Answer3: Monitor y teclado
+      Answer4: "CPU y tarjeta gr\xE1fica"
+      CorrectAnswerIndex: 1
+    - Question: "\xBFCu\xE1l fue el primer invento considerado base de la computaci\xF3n
+        moderna?"
+      Answer1: Mouse
+      Answer2: Disco duro
+      Answer3: "M\xE1quina anal\xEDtica de Babbage"
+      Answer4: Sistema operativo
+      CorrectAnswerIndex: 3
