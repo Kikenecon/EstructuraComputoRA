@@ -8,29 +8,18 @@ public class QuestionsManager : Singleton<QuestionsManager>
 {
     public static Action OnNewQuestionLoaded;
     public static Action OnAnswerProvided;
-    public static Action OnQuestionsCompleted;
+    public static Action OnQuestionsCompleted; // Evento para el panel de resultados
 
     public Transform CorrectImage;
-
     public Transform IncorrectImage;
-
     public QuestionUI Question;
 
     private CategoryGameManager _categorygameManager;
-
     private string _currentCategory;
-
     private QuestionModel _currentQuestion;
+    private int _correctAnswers = 0; // Contador de respuestas correctas
+    private List<QuestionModel> _answeredQuestions = new List<QuestionModel>(); // Registro de preguntas respondidas
 
-    /*private void Start()
-    {
-        //Cache a reference
-        _categorygameManager = CategoryGameManager.Instance;
-
-        _currentCategory = _categorygameManager.GetCurrentCategory();
-
-        LoadNextQuestion();
-    }     Codigo Anterior*/
     private void Start()
     {
         _categorygameManager = CategoryGameManager.Instance;
@@ -51,14 +40,17 @@ public class QuestionsManager : Singleton<QuestionsManager>
     void LoadNextQuestion()
     {
         _currentQuestion = _categorygameManager.GetQuestionForCategory(_currentCategory);
-
-        if(_currentQuestion != null)
+        if (_currentQuestion != null)
         {
-           
+            _answeredQuestions.Add(_currentQuestion); // Registra la pregunta actual
             Question.PopulateQuestion(_currentQuestion);
         }
+        else if (_answeredQuestions.Count >= 3) // Si se respondieron 3 preguntas
+        {
+            ShowResults();
+        }
         OnNewQuestionLoaded?.Invoke();
-    } 
+    }
 
     public bool AnswerQuestion(int answerIndex)
     {
@@ -67,14 +59,15 @@ public class QuestionsManager : Singleton<QuestionsManager>
             Debug.LogError("No hay pregunta actual cargada.");
             return false;
         }
-        OnAnswerProvided?.Invoke();
 
+        OnAnswerProvided?.Invoke();
         bool isCorrect = _currentQuestion.CorrectAnswerIndex == answerIndex;
+        if (isCorrect) _correctAnswers++;
 
         if (isCorrect)
         {
             TweenResult(CorrectImage);
-        }   
+        }
         else
         {
             TweenResult(IncorrectImage);
@@ -85,12 +78,26 @@ public class QuestionsManager : Singleton<QuestionsManager>
     void TweenResult(Transform resultTransform)
     {
         Sequence result = DOTween.Sequence();
-        result.Append(resultTransform.DOScale(endValue: 1, duration: .5f).SetEase(Ease.OutBack)); //escala de 0 a 1 
+        result.Append(resultTransform.DOScale(endValue: 1, duration: 0.5f).SetEase(Ease.OutBack));
         result.AppendInterval(1f);
-        result.Append(resultTransform.DOScale(endValue: 0, duration: .2f).SetEase(Ease.Linear)); //
+        result.Append(resultTransform.DOScale(endValue: 0, duration: 0.2f).SetEase(Ease.Linear));
         result.AppendCallback(LoadNextQuestion);
     }
 
+    void ShowResults()
+    {
+        OnQuestionsCompleted?.Invoke(); // Activa el panel de resultados
+    }
 
+    // Propiedades públicas para acceder a los datos
+    public int CorrectAnswersCount => _correctAnswers;
+    public List<QuestionModel> AnsweredQuestions => _answeredQuestions;
 
+    // Método para reiniciar y volver a WheelScreen
+    public void ResetAndReturnToWheel()
+    {
+        _correctAnswers = 0;
+        _answeredQuestions.Clear();
+        PanelManager.Instance.ShowPanel("WheelScreen", PanelShowBehaviour.HIDE_PREVIOUS);
+    }
 }
