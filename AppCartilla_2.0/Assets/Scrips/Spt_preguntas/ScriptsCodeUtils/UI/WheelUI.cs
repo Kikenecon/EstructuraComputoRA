@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening; // Agrega esta línea para DOTween
+using DG.Tweening; // línea para DOTween
 
 public class WheelUI : MonoBehaviour
 {
@@ -27,7 +27,11 @@ public class WheelUI : MonoBehaviour
 
     public string GetLandedCategory(float angle)
     {
-        int anglePerCategory = 360 / Categories.Count; // 45 grades
-        return Categories[(int)(angle / anglePerCategory)];
+        int anglePerCategory = 360 / Categories.Count;
+        int index = Mathf.FloorToInt(angle / anglePerCategory);
+        Debug.Log($"Ángulo recibido: {angle}, categoría elegida: {Categories[index]}");
+        if (index >= Categories.Count) index = Categories.Count - 1; // prevenir desbordamiento
+        return Categories[index];
     }
+
 }

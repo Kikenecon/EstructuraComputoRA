@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PanelManager : Singleton<PanelManager>
@@ -18,7 +17,7 @@ public class PanelManager : Singleton<PanelManager>
     {
         // Cache the ObjectPool
         _objectPool = ObjectPool.Instance;
-        
+
         // Send an event that we are finished initializing
         PanelEvents.OnPanelManagerInitialized?.Invoke();
     }
@@ -36,18 +35,18 @@ public class PanelManager : Singleton<PanelManager>
             {
                 // Get the last panel
                 var lastPanel = GetLastPanel();
-                
+
                 // Disable it
                 lastPanel?.PanelInstance.SetActive(false);
             }
-            
+
             // Add this new panel to the queue
             _panelInstanceModels.Add(new PanelInstanceModel
             {
                 PanelId = panelId,
                 PanelInstance = panelInstance
             });
-            
+
             // Send an event that we are showing a panel
             PanelEvents.OnPanelShown?.Invoke(panelId);
         }
@@ -67,22 +66,22 @@ public class PanelManager : Singleton<PanelManager>
 
             // Remove it from the list of instances
             _panelInstanceModels.Remove(lastPanel);
-            
+
             // Pool the object
             _objectPool.PoolObject(lastPanel.PanelInstance);
 
             // If we have more panels in the queue
-           if (GetAmountPanelsInQueue() > 0)
-           {
-               lastPanel = GetLastPanel();
-               if (lastPanel != null && !lastPanel.PanelInstance.activeInHierarchy)
-               {
-                   lastPanel.PanelInstance.SetActive(true);
-               }
-           }
-           
-           // Send an event that a panel was hidden
-           PanelEvents.OnPanelHidden?.Invoke();
+            if (GetAmountPanelsInQueue() > 0)
+            {
+                lastPanel = GetLastPanel();
+                if (lastPanel != null && !lastPanel.PanelInstance.activeInHierarchy)
+                {
+                    lastPanel.PanelInstance.SetActive(true);
+                }
+            }
+
+            // Send an event that a panel was hidden
+            PanelEvents.OnPanelHidden?.Invoke();
         }
     }
 

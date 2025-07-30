@@ -186,11 +186,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Categories:
   - Almacenamiento
-  - "Perif\xE9ricosExternos"
+  - PerifericosExternos
   - TarjetaMadre
   - Procesador
   - MemoriaRAM
-  - "TarjetaGr\xE1fica  "
+  - 'TarjetaGrafica  '
   - 'Computador '
   PlayButton: {fileID: 3227003444684108806}
   Wheel: {fileID: 6365379960173788536}

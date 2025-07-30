@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 6103878595093687005}
   - component: {fileID: 2102777029419791019}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: ResultText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -288,7 +288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1585621180544993301
 RectTransform:
   m_ObjectHideFlags: 0
@@ -421,9 +421,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2570700688371223037}
-  - component: {fileID: 8981120292743957924}
+  - component: {fileID: 6193831583454630882}
   m_Layer: 0
-  m_Name: ResultScreen
+  m_Name: FinalScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -445,7 +445,7 @@ Transform:
   - {fileID: 1585621180544993301}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8981120292743957924
+--- !u!114 &6193831583454630882
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -457,9 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb180617133c4004e9c034c8dcc23c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScoreText: {fileID: 2102777029419791019}
-  CorrectAnswersText: {fileID: 5598392440050795382}
-  ReturnButton: {fileID: 2082532936463209044}
+  ResultText: {fileID: 2102777029419791019}
 --- !u!1 &8394094065532716274
 GameObject:
   m_ObjectHideFlags: 0

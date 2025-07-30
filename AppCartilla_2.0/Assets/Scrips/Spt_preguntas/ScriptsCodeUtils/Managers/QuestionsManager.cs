@@ -6,19 +6,36 @@ using DG.Tweening;
 
 public class QuestionsManager : Singleton<QuestionsManager>
 {
+    private int _totalQuestions = 0;
+    private int _correctAnswers = 0;
+    private int _questionsAnswered = 0;
+
+
     public static Action OnNewQuestionLoaded;
     public static Action OnAnswerProvided;
-    public static Action OnQuestionsCompleted; // Evento para el panel de resultados
+    public static Action OnQuestionsCompleted;
 
     public Transform CorrectImage;
+
     public Transform IncorrectImage;
+
     public QuestionUI Question;
 
     private CategoryGameManager _categorygameManager;
+
     private string _currentCategory;
+
     private QuestionModel _currentQuestion;
-    private int _correctAnswers = 0; // Contador de respuestas correctas
-    private List<QuestionModel> _answeredQuestions = new List<QuestionModel>(); // Registro de preguntas respondidas
+
+    /*private void Start()
+    {
+        //Cache a reference
+        _categorygameManager = CategoryGameManager.Instance;
+
+        _currentCategory = _categorygameManager.GetCurrentCategory();
+
+        LoadNextQuestion();
+    }     Codigo Anterior*/
 
     private void Start()
     {
@@ -34,6 +51,13 @@ public class QuestionsManager : Singleton<QuestionsManager>
             Debug.LogError("No se pudo obtener una categoría válida.");
             return;
         }
+
+        // Obtiene el total de preguntas de la categoría actual
+        _totalQuestions = _categorygameManager.TriviaConfiguration.Categories
+            .Find(cat => cat.CategoryName == _currentCategory)?.Questions.Count ?? 0;
+
+        _correctAnswers = 0;
+        _questionsAnswered = 0;
         LoadNextQuestion();
     }
 
@@ -42,15 +66,16 @@ public class QuestionsManager : Singleton<QuestionsManager>
         _currentQuestion = _categorygameManager.GetQuestionForCategory(_currentCategory);
         if (_currentQuestion != null)
         {
-            _answeredQuestions.Add(_currentQuestion); // Registra la pregunta actual
+            Debug.Log($"Pregunta cargada: {_currentQuestion.Question}");
             Question.PopulateQuestion(_currentQuestion);
         }
-        else if (_answeredQuestions.Count >= 3) // Si se respondieron 3 preguntas
+        else
         {
-            ShowResults();
+            Debug.LogWarning("No se pudo cargar ninguna pregunta.");
         }
         OnNewQuestionLoaded?.Invoke();
     }
+
 
     public bool AnswerQuestion(int answerIndex)
     {
@@ -59,13 +84,13 @@ public class QuestionsManager : Singleton<QuestionsManager>
             Debug.LogError("No hay pregunta actual cargada.");
             return false;
         }
-
         OnAnswerProvided?.Invoke();
-        bool isCorrect = _currentQuestion.CorrectAnswerIndex == answerIndex;
-        if (isCorrect) _correctAnswers++;
 
+        bool isCorrect = _currentQuestion.CorrectAnswerIndex == answerIndex;
+        _questionsAnswered++;
         if (isCorrect)
         {
+            _correctAnswers++;
             TweenResult(CorrectImage);
         }
         else
@@ -78,26 +103,32 @@ public class QuestionsManager : Singleton<QuestionsManager>
     void TweenResult(Transform resultTransform)
     {
         Sequence result = DOTween.Sequence();
-        result.Append(resultTransform.DOScale(endValue: 1, duration: 0.5f).SetEase(Ease.OutBack));
+        result.Append(resultTransform.DOScale(endValue: 1, duration: .5f).SetEase(Ease.OutBack)); //escala de 0 a 1 
         result.AppendInterval(1f);
-        result.Append(resultTransform.DOScale(endValue: 0, duration: 0.2f).SetEase(Ease.Linear));
-        result.AppendCallback(LoadNextQuestion);
+        result.Append(resultTransform.DOScale(endValue: 0, duration: .2f).SetEase(Ease.Linear)); //
+
+        result.AppendCallback(() =>
+        {
+            if (_questionsAnswered >= _totalQuestions)
+            {
+                ShowFinalScreen();
+            }
+            else
+            {
+                LoadNextQuestion();
+            }
+        });
     }
 
-    void ShowResults()
+    void ShowFinalScreen()
     {
-        OnQuestionsCompleted?.Invoke(); // Activa el panel de resultados
+        // Guardar el resultado en PlayerPrefs (opcional)
+        PlayerPrefs.SetInt("CorrectAnswers", _correctAnswers);
+        PlayerPrefs.SetInt("TotalQuestions", _totalQuestions);
+        PlayerPrefs.Save();
+
+        PanelManager.Instance.ShowPanel("FinalScreen", PanelShowBehaviour.HIDE_PREVIOUS);
+        OnQuestionsCompleted?.Invoke();
     }
 
-    // Propiedades públicas para acceder a los datos
-    public int CorrectAnswersCount => _correctAnswers;
-    public List<QuestionModel> AnsweredQuestions => _answeredQuestions;
-
-    // Método para reiniciar y volver a WheelScreen
-    public void ResetAndReturnToWheel()
-    {
-        _correctAnswers = 0;
-        _answeredQuestions.Clear();
-        PanelManager.Instance.ShowPanel("WheelScreen", PanelShowBehaviour.HIDE_PREVIOUS);
-    }
 }

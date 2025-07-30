@@ -49,7 +49,7 @@ public class AnswerUI : MonoBehaviour
 
     void ResetValues()
     {
-        Debug.Log($"Reseteando imágenes para {gameObject.name}");
+        Debug.Log($"Reseteando respuestas correct e incorrect para {gameObject.name}");
         CorrectImage.DOFade(endValue: 0, duration: .2f);
         IncorrectImage.DOFade(endValue: 0, duration: .2f);
         _canBeClicked = true;

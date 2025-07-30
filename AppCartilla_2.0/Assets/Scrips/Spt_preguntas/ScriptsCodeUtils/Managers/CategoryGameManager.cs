@@ -26,6 +26,7 @@ public class CategoryGameManager : Singleton<CategoryGameManager>
     public QuestionModel GetQuestionForCategory(string categoryName)
     {
         CategoryModel categoryModel = TriviaConfiguration.Categories.FirstOrDefault(predicate: category => category.CategoryName == categoryName);
+        Debug.Log($"Buscando categoría: {categoryName}");
         if (categoryModel != null && categoryModel.Questions != null && categoryModel.Questions.Count > 0)
         {
             if (_askedQuestionIndex.Count >= categoryModel.Questions.Count)
@@ -43,6 +44,8 @@ public class CategoryGameManager : Singleton<CategoryGameManager>
             return categoryModel.Questions[randomIndex];
         }
         return null;
+        
+
     }
 
 
@@ -54,6 +57,6 @@ public class CategoryGameManager : Singleton<CategoryGameManager>
 
     public string GetCurrentCategory()
     {
-        return _currentCategory; 
+        return _currentCategory;
     }
 }
