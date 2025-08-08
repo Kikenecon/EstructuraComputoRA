@@ -27,16 +27,6 @@ public class QuestionsManager : Singleton<QuestionsManager>
 
     private QuestionModel _currentQuestion;
 
-    /*private void Start()
-    {
-        //Cache a reference
-        _categorygameManager = CategoryGameManager.Instance;
-
-        _currentCategory = _categorygameManager.GetCurrentCategory();
-
-        LoadNextQuestion();
-    }     Codigo Anterior*/
-
     private void Start()
     {
         _categorygameManager = CategoryGameManager.Instance;
@@ -92,10 +82,12 @@ public class QuestionsManager : Singleton<QuestionsManager>
         {
             _correctAnswers++;
             TweenResult(CorrectImage);
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.songCorrect);
         }
         else
         {
             TweenResult(IncorrectImage);
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.songIncorrect);
         }
         return isCorrect;
     }
@@ -129,6 +121,8 @@ public class QuestionsManager : Singleton<QuestionsManager>
 
         PanelManager.Instance.ShowPanel("FinalScreen", PanelShowBehaviour.HIDE_PREVIOUS);
         OnQuestionsCompleted?.Invoke();
+        Debug.Log("Mostrando panel final");
     }
+
 
 }

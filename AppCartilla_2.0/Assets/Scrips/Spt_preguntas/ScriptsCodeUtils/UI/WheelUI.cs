@@ -14,7 +14,9 @@ public class WheelUI : MonoBehaviour
 
     public void SpinWheel()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.songRuleta); //Esto Inicia el sonido para la Ruleta
         float randomAngle = Random.Range(0, 360);
+        
         CategoryGameManager.Instance.SetCurrentCategory(GetLandedCategory(randomAngle));
         float rotateAngle = (360 * AmountRotations) + randomAngle;
         Wheel.DOLocalRotate(endValue: new Vector3(0, 0, rotateAngle * -1), RotateDuration, RotateMode.FastBeyond360).onComplete += WheelFinishedRotating;
