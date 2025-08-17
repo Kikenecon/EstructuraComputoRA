@@ -6,6 +6,11 @@ using DG.Tweening;
 
 public class QuestionsManager : Singleton<QuestionsManager>
 {
+    private int _totalQuestions = 0;
+    private int _correctAnswers = 0;
+    private int _questionsAnswered = 0;
+
+
     public static Action OnNewQuestionLoaded;
     public static Action OnAnswerProvided;
     public static Action OnQuestionsCompleted;
@@ -22,15 +27,6 @@ public class QuestionsManager : Singleton<QuestionsManager>
 
     private QuestionModel _currentQuestion;
 
-    /*private void Start()
-    {
-        //Cache a reference
-        _categorygameManager = CategoryGameManager.Instance;
-
-        _currentCategory = _categorygameManager.GetCurrentCategory();
-
-        LoadNextQuestion();
-    }     Codigo Anterior*/
     private void Start()
     {
         _categorygameManager = CategoryGameManager.Instance;
@@ -45,20 +41,31 @@ public class QuestionsManager : Singleton<QuestionsManager>
             Debug.LogError("No se pudo obtener una categoría válida.");
             return;
         }
+
+        // Obtiene el total de preguntas de la categoría actual
+        _totalQuestions = _categorygameManager.TriviaConfiguration.Categories
+            .Find(cat => cat.CategoryName == _currentCategory)?.Questions.Count ?? 0;
+
+        _correctAnswers = 0;
+        _questionsAnswered = 0;
         LoadNextQuestion();
     }
 
     void LoadNextQuestion()
     {
         _currentQuestion = _categorygameManager.GetQuestionForCategory(_currentCategory);
-
-        if(_currentQuestion != null)
+        if (_currentQuestion != null)
         {
-           
+            Debug.Log($"Pregunta cargada: {_currentQuestion.Question}");
             Question.PopulateQuestion(_currentQuestion);
         }
+        else
+        {
+            Debug.LogWarning("No se pudo cargar ninguna pregunta.");
+        }
         OnNewQuestionLoaded?.Invoke();
-    } 
+    }
+
 
     public bool AnswerQuestion(int answerIndex)
     {
@@ -70,14 +77,17 @@ public class QuestionsManager : Singleton<QuestionsManager>
         OnAnswerProvided?.Invoke();
 
         bool isCorrect = _currentQuestion.CorrectAnswerIndex == answerIndex;
-
+        _questionsAnswered++;
         if (isCorrect)
         {
+            _correctAnswers++;
             TweenResult(CorrectImage);
-        }   
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.songCorrect);
+        }
         else
         {
             TweenResult(IncorrectImage);
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.songIncorrect);
         }
         return isCorrect;
     }
@@ -88,9 +98,31 @@ public class QuestionsManager : Singleton<QuestionsManager>
         result.Append(resultTransform.DOScale(endValue: 1, duration: .5f).SetEase(Ease.OutBack)); //escala de 0 a 1 
         result.AppendInterval(1f);
         result.Append(resultTransform.DOScale(endValue: 0, duration: .2f).SetEase(Ease.Linear)); //
-        result.AppendCallback(LoadNextQuestion);
+
+        result.AppendCallback(() =>
+        {
+            if (_questionsAnswered >= _totalQuestions)
+            {
+                ShowFinalScreen();
+            }
+            else
+            {
+                LoadNextQuestion();
+            }
+        });
     }
 
+    void ShowFinalScreen()
+    {
+        // Guardar el resultado en PlayerPrefs (opcional)
+        PlayerPrefs.SetInt("CorrectAnswers", _correctAnswers);
+        PlayerPrefs.SetInt("TotalQuestions", _totalQuestions);
+        PlayerPrefs.Save();
+
+        PanelManager.Instance.ShowPanel("FinalScreen", PanelShowBehaviour.HIDE_PREVIOUS);
+        OnQuestionsCompleted?.Invoke();
+        Debug.Log("Mostrando panel final");
+    }
 
 
 }

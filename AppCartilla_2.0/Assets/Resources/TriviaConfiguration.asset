@@ -35,7 +35,7 @@ MonoBehaviour:
       Answer3: Los HDD no almacenan datos
       Answer4: "Los HDD son m\xE1s caros"
       CorrectAnswerIndex: 2
-  - CategoryName: "Perif\xE9ricosExternos"
+  - CategoryName: PerifericosExternos
     Questions:
     - Question: "\xBFCu\xE1l de los siguientes es un perif\xE9rico de entrada?"
       Answer1: Monitor
@@ -118,7 +118,7 @@ MonoBehaviour:
       Answer3: Chip SPD
       Answer4: Banco de memoria
       CorrectAnswerIndex: 2
-  - CategoryName: "TarjetaGr\xE1fica"
+  - CategoryName: 'TarjetaGrafica  '
     Questions:
     - Question: "\xBFQu\xE9 hace la GPU dentro de la tarjeta gr\xE1fica?"
       Answer1: "Procesa datos gr\xE1ficos"
@@ -139,7 +139,7 @@ MonoBehaviour:
       Answer3: "Convertir se\xF1ales digitales en anal\xF3gicas"
       Answer4: Ejecutar el sistema operativo
       CorrectAnswerIndex: 3
-  - CategoryName: Computador
+  - CategoryName: 'Computador '
     Questions:
     - Question: "\xBFQu\xE9 tipo de computadora es ideal para cient\xEDficos y simulaciones
         complejas?"
