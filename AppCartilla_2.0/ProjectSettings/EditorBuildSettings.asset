@@ -5,18 +5,27 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/SamplesResources/Scenes/0-Main.unity
-    guid: a09cb257d566c489595b16ab37547666
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: c2f5de5bb75653d4da5538e0d611f512
+  - enabled: 1
+    path: Assets/Scenes/Menu_Games.unity
+    guid: fb7ef4e048f51004ca49048dbbaf66a1
+  - enabled: 1
+    path: Assets/Scenes/Menu_multimedia.unity
+    guid: 3e61f93e15387ce4dae8ca7ad8e693f0
+  - enabled: 1
+    path: Assets/Scenes/Menu_Scanner.unity
+    guid: b1b635a4e3fb2ad47aea6b8c1b87967c
   - enabled: 1
     path: Assets/Scenes/Modelos3DRA.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/SceneMultimedia.unity
     guid: 4bf42c98c3c426c4292ca57b3f383fc2
+  - enabled: 1
+    path: Assets/Scenes/Escena_Ensamblaje/Menu_Ensamblaje.unity
+    guid: 7e787e2aa30142041a4bc72d75e4b2ab
   - enabled: 1
     path: Assets/Scenes/Escena_Ensamblaje/Level1Scene.unity
     guid: 19a733e3455e42f4d9ac436d48026b3e
@@ -27,17 +36,17 @@ EditorBuildSettings:
     path: Assets/Scenes/Escena_Ensamblaje/Level3Scene.unity
     guid: 7d8ca11fce9cc5d4ebdb296220bfc623
   - enabled: 1
-    path: Assets/Scenes/Escena_Ensamblaje/Menu_Ensamblaje.unity
-    guid: 7e787e2aa30142041a4bc72d75e4b2ab
-  - enabled: 1
     path: Assets/Scenes/Escena_Preguntas/Preguntas.unity
     guid: 87112d95db60a8e4db51cfd60da7c695
   - enabled: 1
-    path: Assets/Scenes/Menu_videojuegos.unity
-    guid: 548e2de8f0034c64b9df231e972da0c7
+    path: Assets/Scenes/pv.unity
+    guid: bf690323e3b2ebf48b4bd6622334c926
   - enabled: 1
-    path: Assets/Scenes/Menu_multimedia.unity
-    guid: 3e61f93e15387ce4dae8ca7ad8e693f0
+    path: Assets/Scenes/Multimedia/multi1.unity
+    guid: 9e3456003a8948245be7ed43505cac2f
+  - enabled: 1
+    path: Assets/Scenes/Scanner/seccion1.unity
+    guid: cd6651fca3675cd48a372ea714a11c89
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: a7401f1461674cf45b70aae8065f55c8,
       type: 2}

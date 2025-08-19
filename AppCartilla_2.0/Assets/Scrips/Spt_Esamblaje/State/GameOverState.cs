@@ -45,7 +45,15 @@ namespace AssemblyGame
         {
             Debug.Log("Entering Game Over State");
             Time.timeScale = 0f; // Pausar el juego
-            UIManagerState.Instance.ShowGameOver(); // Mostrar el GameOverCanvas
+            SceneUIManager uiManager = Object.FindObjectOfType<SceneUIManager>(); // Usar el nombre completo como prueba
+            if (uiManager != null)
+            {
+                uiManager.ShowGameOverPanel(true); // Usar el método de SceneUIManager
+            }
+            else
+            {
+                Debug.LogError("SceneUIManager no encontrado en la escena actual.");
+            }
         }
 
         public void OnExit(AssemblyGameManager context)
@@ -61,9 +69,7 @@ namespace AssemblyGame
 
         public void HandleInput(AssemblyGameManager context)
         {
-            // Los botones en el GameOverCanvas manejarán las interacciones
+            // Los botones en el GameOverCanvas manejan las interacciones
         }
     }
 }
-
-

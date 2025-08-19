@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b6c5783f29c5144b274e2bb210e29d, type: 3}
+  m_Name: Ventilador
+  m_EditorClassIdentifier: 
+  ItemName: Ventilador
+  ItemImagen: {fileID: 21300000, guid: c834e649bc3c605438e5e1a7662ae50d, type: 3}
+  Item3DModel: {fileID: 2640142961919478818, guid: 0493d48cc320a1b40b7275a26ced522f,
+    type: 3}

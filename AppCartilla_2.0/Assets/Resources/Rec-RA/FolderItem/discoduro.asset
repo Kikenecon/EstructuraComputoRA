@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b6c5783f29c5144b274e2bb210e29d, type: 3}
   m_Name: discoduro
   m_EditorClassIdentifier: 
-  ItemName: dISCO dRO
+  ItemName: Disco Duro
   ItemImagen: {fileID: 21300000, guid: c33aba49ce7a5784180be75f44e5cb6d, type: 3}
   Item3DModel: {fileID: 54965240896040080, guid: bbe9da2e465f9b6498c506de5e6b6b13,
     type: 3}

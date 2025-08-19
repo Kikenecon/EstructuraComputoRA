@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b6c5783f29c5144b274e2bb210e29d, type: 3}
+  m_Name: Unidad M.2 NVMe
+  m_EditorClassIdentifier: 
+  ItemName: Unidad M.2 NVMe
+  ItemImagen: {fileID: 21300000, guid: dcf61d285ee7d8e41b2485fb32f78511, type: 3}
+  Item3DModel: {fileID: 4753551322485672164, guid: fc585f264ae2b2f449a4ad39f91d74cd,
+    type: 3}

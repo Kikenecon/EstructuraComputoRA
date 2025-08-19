@@ -1406,6 +1406,8 @@ MonoBehaviour:
   m_Script: {fileID: -1826476478, guid: 8a9a760f95896c34689febc965510927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mWorldCenterMode: 2
+  mWorldCenter: {fileID: 0}
 --- !u!81 &953407923
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1652,7 +1654,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Menu
+          m_StringArgument: Menu_multimedia
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1052500017
@@ -2135,7 +2137,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 68815190, y: 2206467.2}
+  m_AnchoredPosition: {x: 70473830, y: 2255661}
   m_SizeDelta: {x: 0, y: 440}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1359703686
@@ -2679,6 +2681,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fb12754a46868334cb1fdc4256b9f7f9, type: 2}
   - {fileID: 11400000, guid: 0c6b15953386e864db4217c7d53570e9, type: 2}
   - {fileID: 11400000, guid: d7ecb37fd29c0fe43b0bd3d46020d3b0, type: 2}
+  - {fileID: 11400000, guid: e2508bb68b1bc184a9ca2a695581a444, type: 2}
+  - {fileID: 11400000, guid: fa35b0cbe3a1b6e4e842523560f9e513, type: 2}
+  - {fileID: 11400000, guid: 2c560a2c91007314d8f7d8cfd5d1cc63, type: 2}
+  - {fileID: 11400000, guid: 77acd80f19f22f540876434893d80853, type: 2}
+  - {fileID: 11400000, guid: 31f5ef78eb66f0a4e868d2eb92e969c4, type: 2}
+  - {fileID: 11400000, guid: 3ebaa2dbb33260e46b982080a7211122, type: 2}
+  - {fileID: 11400000, guid: e58e53775ca7c9445846987b54f81624, type: 2}
+  - {fileID: 11400000, guid: 7d0ce70c5b4b1ea4f966d93b49953d88, type: 2}
+  - {fileID: 11400000, guid: e225550b8484c2d428962c71735564dc, type: 2}
+  - {fileID: 11400000, guid: ff3283d586fe51440a1130d05a892ad6, type: 2}
+  - {fileID: 11400000, guid: 63935b057ab9572438558cf28f2ac232, type: 2}
   buttonContainer: {fileID: 1359703684}
   itemButtonManager: {fileID: 5821973518968893724, guid: 49e55e6917a44a948b7ecc69c77a8744,
     type: 3}
@@ -2743,7 +2756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cb9aa70a22847b5925ee5f067c10a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 953407920}
   m_OriginBaseGameObject: {fileID: 2118503397}
   m_CameraFloorOffsetObject: {fileID: 0}
   m_RequestedTrackingOriginMode: 0

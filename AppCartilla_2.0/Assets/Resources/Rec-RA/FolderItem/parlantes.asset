@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b6c5783f29c5144b274e2bb210e29d, type: 3}
   m_Name: parlantes
   m_EditorClassIdentifier: 
-  ItemName: 
+  ItemName: Parlantes
   ItemImagen: {fileID: 0}
   Item3DModel: {fileID: 0}

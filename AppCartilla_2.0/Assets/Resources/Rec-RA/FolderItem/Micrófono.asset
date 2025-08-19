@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b6c5783f29c5144b274e2bb210e29d, type: 3}
+  m_Name: "Micr\xF3fono"
+  m_EditorClassIdentifier: 
+  ItemName: "Micr\xF3fono"
+  ItemImagen: {fileID: 21300000, guid: 46a38f45eee929a4f95d6daa6dd37ff2, type: 3}
+  Item3DModel: {fileID: 2664379373180860132, guid: d3eb30d3c44976a42a5eb8da72a4b152,
+    type: 3}
