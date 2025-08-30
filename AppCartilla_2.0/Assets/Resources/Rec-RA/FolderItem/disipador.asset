@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: disipador
   m_EditorClassIdentifier: 
   ItemName: Disipador
-  ItemImagen: {fileID: 21300000, guid: 6ccc489a0b03ec94f9b41a40db6ff743, type: 3}
+  ItemImagen: {fileID: 21300000, guid: 708a443e7234c1345ad1d02a2d8a2ee0, type: 3}
   Item3DModel: {fileID: 7886290005018172137, guid: 76eb0122b4bc5be42933bf9bf94dcce8,
     type: 3}

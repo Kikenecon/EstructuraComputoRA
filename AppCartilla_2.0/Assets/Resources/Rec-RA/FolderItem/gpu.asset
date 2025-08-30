@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: gpu
   m_EditorClassIdentifier: 
   ItemName: GPU
-  ItemImagen: {fileID: 21300000, guid: 4f11f4baca2aef44fa8b24e68b611c49, type: 3}
+  ItemImagen: {fileID: 21300000, guid: 9a3a8e4d0597b0b42a26dc19d39f53b4, type: 3}
   Item3DModel: {fileID: 1747780670368811363, guid: d8be4aaee54d1a34d887b5d42d42cc74,
     type: 3}

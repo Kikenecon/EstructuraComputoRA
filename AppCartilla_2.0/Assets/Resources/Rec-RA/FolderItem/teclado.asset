@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: teclado
   m_EditorClassIdentifier: 
   ItemName: Teclado
-  ItemImagen: {fileID: 21300000, guid: 2bf785f05068b734ebbe1c0a3880e84d, type: 3}
+  ItemImagen: {fileID: 21300000, guid: 5e278403d0c0e544180b347866fbc623, type: 3}
   Item3DModel: {fileID: 579637456279079454, guid: d2085a5b77974cc43b43f02d93a212a9,
     type: 3}

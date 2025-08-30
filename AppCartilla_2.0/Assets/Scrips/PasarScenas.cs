@@ -8,5 +8,9 @@ public class PasarScenas : MonoBehaviour
     public void  CambiarEscena(string nombre)
     {
         SceneManager.LoadScene(nombre);
+        if (AudioListener.pause == true)
+        {
+            AudioListener.pause = false;
+        }
     }
 }

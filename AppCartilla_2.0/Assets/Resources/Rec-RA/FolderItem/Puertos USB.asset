@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b6c5783f29c5144b274e2bb210e29d, type: 3}
   m_Name: Puertos USB
   m_EditorClassIdentifier: 
-  ItemName: Puertos USB
+  ItemName: USB
   ItemImagen: {fileID: 21300000, guid: 0ee5f3c5a4445b74f860aa0f40adb68d, type: 3}
-  Item3DModel: {fileID: 3083223772376624155, guid: 18ba27e36c5fc8e4b897f118c37b20f5,
+  Item3DModel: {fileID: 8065505870742688397, guid: 18ba27e36c5fc8e4b897f118c37b20f5,
     type: 3}

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace AssemblyGame
 {
@@ -50,6 +50,8 @@ namespace AssemblyGame
 
         public void OnPause()
         {
+
+            
             if (isPaused) return;
             isPaused = true;
             if (pausePanel != null)
@@ -57,7 +59,8 @@ namespace AssemblyGame
                 pausePanel.SetActive(true);
                 gameManager.SetState(new PausedState());
                 Time.timeScale = 0f;
-                Debug.Log("PausePanel activado.");
+                AudioListener.pause = true;
+                Debug.Log("PausePanel activado y audio pausado.");
             }
             else
             {
@@ -73,8 +76,9 @@ namespace AssemblyGame
             {
                 pausePanel.SetActive(false);
                 Time.timeScale = 1f;
+                AudioListener.pause = false;
                 gameManager.SetState(new PlayingState());
-                Debug.Log("PausePanel desactivado.");
+                Debug.Log("PausePanel desactivado y audio reanudado.");
             }
             else
             {
@@ -99,10 +103,10 @@ namespace AssemblyGame
             {
                 if (levelCompletePanel != null) levelCompletePanel.SetActive(false);
                 if (gameOverPanel != null) gameOverPanel.SetActive(false);
-                Time.timeScale = 1f;
-                gameManager.ResetGame();
-                SceneManager.LoadScene("Level1Scene");
-                Debug.Log("Retry activado.");
+                Time.timeScale = 1f; // Asegura que el tiempo se reanude
+                gameManager.ResetGame(); // Reinicia todos los valores
+                SceneManager.LoadScene("Level1Scene"); // Fuerza la carga de Level1Scene
+                Debug.Log("Retry activado, reiniciando desde Level1Scene.");
             }
         }
 
@@ -113,8 +117,8 @@ namespace AssemblyGame
                 if (levelCompletePanel != null) levelCompletePanel.SetActive(false);
                 if (gameOverPanel != null) gameOverPanel.SetActive(false);
                 Time.timeScale = 1f;
-                gameManager.ResetGame(); // Reinicia todos los valores
-                SceneManager.LoadScene("Menu_Ensamblaje"); // Carga el menú
+                gameManager.ResetGame();
+                SceneManager.LoadScene("Menu_Ensamblaje");
                 Debug.Log("Juego reiniciado y enviado a Menu_Ensamblaje.");
             }
         }
@@ -153,6 +157,7 @@ namespace AssemblyGame
 
 //using TMPro;
 //using UnityEngine;
+//using UnityEngine.SceneManagement;
 //using UnityEngine.UI;
 
 //namespace AssemblyGame
@@ -209,7 +214,8 @@ namespace AssemblyGame
 //                pausePanel.SetActive(true);
 //                gameManager.SetState(new PausedState());
 //                Time.timeScale = 0f;
-//                Debug.Log("PausePanel activado.");
+//                AudioListener.pause = true; // Pausa todo el audio
+//                Debug.Log("PausePanel activado y audio pausado.");
 //            }
 //            else
 //            {
@@ -225,8 +231,9 @@ namespace AssemblyGame
 //            {
 //                pausePanel.SetActive(false);
 //                Time.timeScale = 1f;
+//                AudioListener.pause = false; // Reanuda el audio
 //                gameManager.SetState(new PlayingState());
-//                Debug.Log("PausePanel desactivado.");
+//                Debug.Log("PausePanel desactivado y audio reanudado.");
 //            }
 //            else
 //            {
@@ -264,11 +271,9 @@ namespace AssemblyGame
 //                if (levelCompletePanel != null) levelCompletePanel.SetActive(false);
 //                if (gameOverPanel != null) gameOverPanel.SetActive(false);
 //                Time.timeScale = 1f;
-//                Application.Quit();
-//#if UNITY_EDITOR
-//                UnityEditor.EditorApplication.isPlaying = false;
-//#endif
-//                Debug.Log("Exit activado.");
+//                gameManager.ResetGame();
+//                SceneManager.LoadScene("Menu_Ensamblaje");
+//                Debug.Log("Juego reiniciado y enviado a Menu_Ensamblaje.");
 //            }
 //        }
 
@@ -303,3 +308,5 @@ namespace AssemblyGame
 //        }
 //    }
 //}
+
+

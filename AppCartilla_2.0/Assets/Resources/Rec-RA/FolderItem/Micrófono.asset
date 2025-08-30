@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: "Micr\xF3fono"
   ItemImagen: {fileID: 21300000, guid: 46a38f45eee929a4f95d6daa6dd37ff2, type: 3}
-  Item3DModel: {fileID: 2664379373180860132, guid: d3eb30d3c44976a42a5eb8da72a4b152,
+  Item3DModel: {fileID: 8303550115866967347, guid: d3eb30d3c44976a42a5eb8da72a4b152,
     type: 3}

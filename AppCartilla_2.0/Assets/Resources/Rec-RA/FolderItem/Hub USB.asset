@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: Hub USB
   ItemImagen: {fileID: 21300000, guid: 9502fc163755c6147a7c3b30b634a359, type: 3}
-  Item3DModel: {fileID: 5034142219877016162, guid: 923d3025c29559844af1d6b5ad3fdf08,
+  Item3DModel: {fileID: 9212193375844011392, guid: 923d3025c29559844af1d6b5ad3fdf08,
     type: 3}

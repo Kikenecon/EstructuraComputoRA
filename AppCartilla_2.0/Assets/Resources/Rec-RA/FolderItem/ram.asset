@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ram
   m_EditorClassIdentifier: 
   ItemName: Ram
-  ItemImagen: {fileID: 21300000, guid: cadc9dcaab2f8794a8be5779a0d3cf9e, type: 3}
+  ItemImagen: {fileID: 21300000, guid: 664c6cf2ee1ec884f93a4b4f21793ddc, type: 3}
   Item3DModel: {fileID: 8908215778038099729, guid: 3225aefeff255fd4c9dde7739d837f08,
     type: 3}

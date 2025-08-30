@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b6c5783f29c5144b274e2bb210e29d, type: 3}
   m_Name: computador
   m_EditorClassIdentifier: 
-  ItemName: Computador
+  ItemName: PC
   ItemImagen: {fileID: 21300000, guid: 6de3aef8eaad52a4f8492bb5867e7bd3, type: 3}
-  Item3DModel: {fileID: 593832420411442750, guid: fdf75dd91a8acb642aa1633e0d0be861,
+  Item3DModel: {fileID: 1057112726087796248, guid: fdf75dd91a8acb642aa1633e0d0be861,
     type: 3}

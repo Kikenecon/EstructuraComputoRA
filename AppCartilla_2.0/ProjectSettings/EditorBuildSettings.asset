@@ -12,17 +12,41 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu_Games.unity
     guid: fb7ef4e048f51004ca49048dbbaf66a1
   - enabled: 1
-    path: Assets/Scenes/Menu_multimedia.unity
+    path: Assets/Scenes/Menu_Multimedia.unity
     guid: 3e61f93e15387ce4dae8ca7ad8e693f0
+  - enabled: 1
+    path: Assets/Scenes/Multimedia/Multimedia1.unity
+    guid: e3b88e896724c384a892f1e9c6fbf43d
+  - enabled: 1
+    path: Assets/Scenes/Multimedia/Multimedia2.unity
+    guid: 4bf42c98c3c426c4292ca57b3f383fc2
+  - enabled: 1
+    path: Assets/Scenes/Multimedia/Multimedia3.unity
+    guid: f86a66b596a0a0b4e835e7f7feb8e976
+  - enabled: 1
+    path: Assets/Scenes/Multimedia/Multimedia4.unity
+    guid: 5ab4ba8c9d96bd047b91554ca7b01d4b
+  - enabled: 1
+    path: Assets/Scenes/Multimedia/Multimedia5.unity
+    guid: 6ab4552bd2c27194baa8bc0b8eaba5c3
   - enabled: 1
     path: Assets/Scenes/Menu_Scanner.unity
     guid: b1b635a4e3fb2ad47aea6b8c1b87967c
   - enabled: 1
-    path: Assets/Scenes/Modelos3DRA.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Scanner/Scanner1.unity
+    guid: 03e916875912c604db85c50d61215a0e
   - enabled: 1
-    path: Assets/Scenes/SceneMultimedia.unity
-    guid: 4bf42c98c3c426c4292ca57b3f383fc2
+    path: Assets/Scenes/Scanner/Scanner2.unity
+    guid: 4d5389e222d71084c857fc3007055d84
+  - enabled: 1
+    path: Assets/Scenes/Scanner/Scanner3.unity
+    guid: bff1b5c3aeb127e4dad1cc551eba34e7
+  - enabled: 1
+    path: Assets/Scenes/Scanner/Scanner4.unity
+    guid: 1c5fb31da965ed644b91ccf7e72d10fd
+  - enabled: 1
+    path: Assets/Scenes/Scanner/Scanner5.unity
+    guid: 5f452c3d17f75bf4cb972fd763fdb2ab
   - enabled: 1
     path: Assets/Scenes/Escena_Ensamblaje/Menu_Ensamblaje.unity
     guid: 7e787e2aa30142041a4bc72d75e4b2ab
@@ -38,15 +62,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Escena_Preguntas/Preguntas.unity
     guid: 87112d95db60a8e4db51cfd60da7c695
-  - enabled: 1
-    path: Assets/Scenes/pv.unity
-    guid: bf690323e3b2ebf48b4bd6622334c926
-  - enabled: 1
-    path: Assets/Scenes/Multimedia/multi1.unity
-    guid: 9e3456003a8948245be7ed43505cac2f
-  - enabled: 1
-    path: Assets/Scenes/Scanner/seccion1.unity
-    guid: cd6651fca3675cd48a372ea714a11c89
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: a7401f1461674cf45b70aae8065f55c8,
       type: 2}

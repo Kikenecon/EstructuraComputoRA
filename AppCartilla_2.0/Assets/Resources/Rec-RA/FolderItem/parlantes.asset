@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: parlantes
   m_EditorClassIdentifier: 
   ItemName: Parlantes
-  ItemImagen: {fileID: 0}
-  Item3DModel: {fileID: 0}
+  ItemImagen: {fileID: 21300000, guid: 838c4d1436d6b9645888304f9c284f81, type: 3}
+  Item3DModel: {fileID: 3456580883751685595, guid: dabcef6b8d42e6f4180cb1016e80da35,
+    type: 3}

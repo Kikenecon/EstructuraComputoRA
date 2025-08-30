@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: mainboard
   m_EditorClassIdentifier: 
   ItemName: MainBoard
-  ItemImagen: {fileID: 21300000, guid: 234faa0fcb1c4784eb58a87e8959a4d8, type: 3}
+  ItemImagen: {fileID: 21300000, guid: 7304e7461c5ba7a46af9ccdb85d1dcba, type: 3}
   Item3DModel: {fileID: 2339655996098163861, guid: 860a62a5ffbd4714c8770ebf962736b8,
     type: 3}

@@ -110,7 +110,7 @@ namespace AssemblyGame
             }
             ConfigureLevel(currentLevel);
             SetState(new PlayingState());
-            Time.timeScale = 1f;
+            Time.timeScale = 1f; // Asegura que el tiempo se reanude al cargar
         }
 
         private void Update()
@@ -407,8 +407,8 @@ namespace AssemblyGame
             currentPartIndex = 0;
             timeRemaining = 60f;
             isLevelComplete = false;
-            ConfigureLevel(currentLevel);
-            // Nota: La escena será sobrescrita por Menu_Ensamblaje desde OnExit
+            SceneManager.LoadScene("Level1Scene"); // Asegura que se cargue Level1Scene
+            ConfigureLevel(currentLevel); // Configura el nivel después de cargar
         }
     }
 }
@@ -820,9 +820,9 @@ namespace AssemblyGame
 //            currentLevel = 1;
 //            currentPartIndex = 0;
 //            timeRemaining = 60f;
-//            SceneManager.LoadScene("Level1Scene");
+//            isLevelComplete = false;
 //            ConfigureLevel(currentLevel);
+//            // Nota: La escena será sobrescrita por Menu_Ensamblaje desde OnExit
 //        }
 //    }
 //}
-

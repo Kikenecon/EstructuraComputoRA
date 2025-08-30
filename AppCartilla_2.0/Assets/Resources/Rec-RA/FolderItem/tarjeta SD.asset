@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b6c5783f29c5144b274e2bb210e29d, type: 3}
   m_Name: tarjeta SD
   m_EditorClassIdentifier: 
-  ItemName: tarjeta SD
+  ItemName: Tarjeta SD
   ItemImagen: {fileID: 21300000, guid: f77526ef06944ee4d9deadb109005e81, type: 3}
   Item3DModel: {fileID: 2390380535731712195, guid: 34af57fd07097a14b8919693de4144ed,
     type: 3}
