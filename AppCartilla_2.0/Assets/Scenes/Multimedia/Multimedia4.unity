@@ -2070,7 +2070,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 71874920, y: 2295014.8}
+  m_AnchoredPosition: {x: 72001530, y: 2298913.8}
   m_SizeDelta: {x: 0, y: 440}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1359703686
@@ -2241,12 +2241,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 2340}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2950,6 +2950,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 84a9cb414294e244f931b7f9acdb2526, type: 2}
   - {fileID: 11400000, guid: 31f5ef78eb66f0a4e868d2eb92e969c4, type: 2}
   - {fileID: 11400000, guid: e225550b8484c2d428962c71735564dc, type: 2}
+  - {fileID: 11400000, guid: 0653f7295bdf9d149a9b6759d7bb947e, type: 2}
   buttonContainer: {fileID: 1359703684}
   itemButtonManager: {fileID: 5821973518968893724, guid: 49e55e6917a44a948b7ecc69c77a8744,
     type: 3}

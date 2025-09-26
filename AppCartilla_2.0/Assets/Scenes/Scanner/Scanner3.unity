@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 198829865}
   - component: {fileID: 198829864}
   - component: {fileID: 198829867}
+  - component: {fileID: 198829868}
   m_Layer: 0
   m_Name: ImageSSD
   m_TagString: Untagged
@@ -311,18 +312,6 @@ MonoBehaviour:
   OnTargetFound:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1581529725}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 118768602}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -400,6 +389,20 @@ MonoBehaviour:
   mCastedBehaviour: {fileID: 198829865}
   mMeshFilter: {fileID: 0}
   mMeshRenderer: {fileID: 0}
+--- !u!114 &198829868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198829863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be5e283f29dfcee47992f80bd39699f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelRoot: {fileID: 1581529725}
+  hideOnLost: 1
 --- !u!1 &208814719
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,7 +567,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 14a7193030900f74e94dce780243a8a5,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 276908758}
   m_SourcePrefab: {fileID: 100100000, guid: 14a7193030900f74e94dce780243a8a5, type: 3}
 --- !u!1 &276908756 stripped
 GameObject:
@@ -578,6 +585,20 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 276908755}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &276908758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276908756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf556289fff9a346ab222cbe19990e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveLerpSpeed: 9
+  scaleSpeed: 0.001
 --- !u!1 &651502613
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,6 +611,7 @@ GameObject:
   - component: {fileID: 651502616}
   - component: {fileID: 651502615}
   - component: {fileID: 651502618}
+  - component: {fileID: 651502619}
   m_Layer: 0
   m_Name: ImageDiscoD
   m_TagString: Untagged
@@ -638,18 +660,6 @@ MonoBehaviour:
   OnTargetFound:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 276908756}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 118768602}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -727,6 +737,20 @@ MonoBehaviour:
   mCastedBehaviour: {fileID: 651502616}
   mMeshFilter: {fileID: 0}
   mMeshRenderer: {fileID: 0}
+--- !u!114 &651502619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651502613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be5e283f29dfcee47992f80bd39699f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelRoot: {fileID: 276908756}
+  hideOnLost: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,6 +857,7 @@ GameObject:
   - component: {fileID: 909720664}
   - component: {fileID: 909720663}
   - component: {fileID: 909720666}
+  - component: {fileID: 909720667}
   m_Layer: 0
   m_Name: ImageM2NVMe
   m_TagString: Untagged
@@ -881,18 +906,6 @@ MonoBehaviour:
   OnTargetFound:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1521555617}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 118768602}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -970,6 +983,20 @@ MonoBehaviour:
   mCastedBehaviour: {fileID: 909720664}
   mMeshFilter: {fileID: 0}
   mMeshRenderer: {fileID: 0}
+--- !u!114 &909720667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909720661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be5e283f29dfcee47992f80bd39699f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelRoot: {fileID: 1521555617}
+  hideOnLost: 1
 --- !u!1 &912523458
 GameObject:
   m_ObjectHideFlags: 0
@@ -982,6 +1009,7 @@ GameObject:
   - component: {fileID: 912523461}
   - component: {fileID: 912523460}
   - component: {fileID: 912523463}
+  - component: {fileID: 912523464}
   m_Layer: 0
   m_Name: ImageRam
   m_TagString: Untagged
@@ -1030,18 +1058,6 @@ MonoBehaviour:
   OnTargetFound:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1556275049}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 118768602}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -1119,6 +1135,20 @@ MonoBehaviour:
   mCastedBehaviour: {fileID: 912523461}
   mMeshFilter: {fileID: 0}
   mMeshRenderer: {fileID: 0}
+--- !u!114 &912523464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912523458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be5e283f29dfcee47992f80bd39699f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelRoot: {fileID: 1556275049}
+  hideOnLost: 1
 --- !u!1 &1042430213
 GameObject:
   m_ObjectHideFlags: 0
@@ -1167,12 +1197,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 2340}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1312,7 +1342,11 @@ PrefabInstance:
     - {fileID: -3824974996824756987, guid: 9de0a4b1c40f184479263afde221811d, type: 3}
     - {fileID: 3483068211074573027, guid: 9de0a4b1c40f184479263afde221811d, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9de0a4b1c40f184479263afde221811d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1521555619}
   m_SourcePrefab: {fileID: 100100000, guid: 9de0a4b1c40f184479263afde221811d, type: 3}
 --- !u!1 &1521555617 stripped
 GameObject:
@@ -1326,6 +1360,20 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1521555616}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1521555619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521555617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf556289fff9a346ab222cbe19990e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveLerpSpeed: 9
+  scaleSpeed: 0.001
 --- !u!1001 &1556275048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1412,7 +1460,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ad8e0a76c27ab624fa4b8ac19649e673,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1556275051}
   m_SourcePrefab: {fileID: 100100000, guid: ad8e0a76c27ab624fa4b8ac19649e673, type: 3}
 --- !u!1 &1556275049 stripped
 GameObject:
@@ -1426,6 +1478,20 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1556275048}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1556275051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556275049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf556289fff9a346ab222cbe19990e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveLerpSpeed: 9
+  scaleSpeed: 0.001
 --- !u!1001 &1581529724
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1514,7 +1580,11 @@ PrefabInstance:
     - {fileID: 65702495048144492, guid: b7bde79dd9748994cb6cebef77d973fe, type: 3}
     - {fileID: -8700617353114198275, guid: b7bde79dd9748994cb6cebef77d973fe, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b7bde79dd9748994cb6cebef77d973fe,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1581529727}
   m_SourcePrefab: {fileID: 100100000, guid: b7bde79dd9748994cb6cebef77d973fe, type: 3}
 --- !u!1 &1581529725 stripped
 GameObject:
@@ -1528,6 +1598,20 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1581529724}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1581529727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581529725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaf556289fff9a346ab222cbe19990e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveLerpSpeed: 9
+  scaleSpeed: 0.001
 --- !u!1 &1732350312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,6 +1744,7 @@ GameObject:
   - component: {fileID: 1732870557}
   - component: {fileID: 1732870556}
   - component: {fileID: 1732870555}
+  - component: {fileID: 1732870558}
   - component: {fileID: 1732870554}
   m_Layer: 5
   m_Name: Eliminar3D
@@ -1682,9 +1767,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1042430217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 360, y: -1002}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -180, y: 168}
   m_SizeDelta: {x: 215, y: 215}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1732870554
@@ -1752,46 +1837,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1556275049}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 276908756}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1581529725}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1521555617}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1732870558}
+        m_TargetAssemblyTypeName: ModelDeleteButton, Assembly-CSharp
+        m_MethodName: OnDeleteButtonPressed
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1838,6 +1887,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732870552}
   m_CullTransparentMesh: 1
+--- !u!114 &1732870558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732870552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8d79dd1dc97c8c4c8c4d32e59747736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 1732870555}
+  labelText: {fileID: 0}
 --- !u!1 &1806605662
 GameObject:
   m_ObjectHideFlags: 0
@@ -1916,9 +1979,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1042430217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -352, y: -999}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 188, y: 171}
   m_SizeDelta: {x: 215, y: 215}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &2027437317
